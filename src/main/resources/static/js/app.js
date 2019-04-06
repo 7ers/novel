@@ -3,9 +3,14 @@
 const vm = new Vue({
     el: '#app',
     data: {
-        results: []
+        results: [{title: "the very first post", abstract: "lorem ipsum some test dimpsum"},
+            {title: "and then there was the second", abstract: "lorem ipsum some test dimsum"},
+            {title: "third time's a charm", abstract: "lorem ipsum some test dimsum"},
+            {title: "four the last time", abstract: "lorem ipsum some test dimsum"}]
     },
     mounted() {
-        axios.get("/1").then(response => {this.results = response.data.results})
+        axios.get("/getUsers").then(response => {
+            this.results = response.data;
+        })
     }
 });

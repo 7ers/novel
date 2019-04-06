@@ -3,6 +3,9 @@ package com.demo.novel.dao;
 import com.demo.novel.entity.Person;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+import org.springframework.context.annotation.Bean;
+
+import java.util.List;
 
 @Mapper
 public interface PersonMapper {
@@ -12,8 +15,9 @@ public interface PersonMapper {
 
     int insertSelective(Person record);
 
-    @Select("SELECT * FROM person WHERE id = #{id}")
     Person selectByPrimaryKey(Integer id);
+
+    List selectAll();
 
     int updateByPrimaryKeySelective(Person record);
 

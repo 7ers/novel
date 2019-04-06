@@ -1,4 +1,4 @@
-package com.demo.novel.control;
+package com.demo.novel.controller;
 
 import com.demo.novel.entity.Person;
 import com.demo.novel.service.PersonService;
@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @RestController
 public class HelloSpringBoot {
@@ -31,5 +33,10 @@ public class HelloSpringBoot {
         System.out.println("get param " + userId);
         Person select = personService.select(userId);
         return select.getUsername();
+    }
+
+    @RequestMapping(path = {"/getUsers"})
+    public List getUserInfo(){
+        return personService.selectAll();
     }
 }
