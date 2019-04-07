@@ -1,0 +1,194 @@
+.bannerImg {
+    width: 20%;
+    cursor: pointer;
+    float: left;
+}
+
+@keyframes switch {
+    0%, 15% {
+        margin-left: 0;
+    }
+    20%, 35% {
+        margin-left: -100%;
+    }
+    40%, 55% {
+        margin-left: -200%;
+    }
+    60%, 75% {
+        margin-left: -300%;
+    }
+    80%, 100% {
+        margin-left: -400%;
+    }
+}
+
+.focus-li{
+    width:7px;
+    height:7px;
+    border-radius:50%;
+    float:left;
+    margin-right:5px;
+    background: #888;
+    list-style: none;
+}
+
+.focus-item{
+    width:100%;
+    height:100%;
+    background:white;
+    opacity: 0;
+    border-radius:inherit;
+    animation-duration: 15s;
+    animation-timing-function: linear;
+    animation-name: fade;
+    animation-iteration-count: infinite;
+}
+
+@keyframes fade{
+    0% {
+        opacity: 1;
+    }
+
+    20% {
+        opacity: 1;
+    }
+
+    20.1% {
+        opacity: 0;
+    }
+}
+
+.focus-item1{
+    animation-delay: -1s;
+}
+.focus-item2{
+    animation-delay: 2s;
+}
+.focus-item3{
+    animation-delay: 5s;
+}
+.focus-item4{
+    animation-delay: 8s;
+}
+.focus-item5{
+    animation-delay: 11s;
+}
+
+.header a {
+    position: absolute;
+    float: right;
+    right: 10px;
+    top: 5px;
+    color: white;
+}
+
+.header svg {
+    width: 20px;
+    height: 20px;
+    fill: currentColor;
+}
+
+.pdrem{
+    overflow:hidden;
+    width:100%;
+}
+
+#nav{
+    padding-top:.1rem;
+}
+
+#nav .nav-a{
+    height:2.0rem;
+    line-height:2.0rem;
+    text-align:center;
+    font-size:.8rem;
+    width:23%;
+    margin:0 2.66667% .1rem 0;
+    float:left;
+}
+
+#nav a{
+    display:block;
+    height:2.0rem;
+    line-height:2.02rem;
+    border-radius:4px;
+}
+
+#nav .nav-a:nth-child(1) a{
+    background:#eadfbf;
+    color:#a8810d;
+}
+
+#nav .nav-a:nth-child(2) a{
+    background:#eed9bb;
+    color:#8f724d;
+}
+
+#nav .nav-a:nth-child(3) a{
+    background:#eddbcc;
+    color:#ad6834;
+}
+
+#nav .nav-a:nth-child(4) a{
+    background:#e7c0c0;
+    color:#924545;
+}
+
+#nav .nav-a:nth-child(5) a{
+    background:#b7e2ef;
+    color:#518fa2;
+}
+
+#nav .nav-a:nth-child(6) a{
+    background:#d6e7c0;
+    color:#7d9b56;
+}
+
+#nav .nav-a:nth-child(7) a{
+    background:#c1e7c0;
+    color:#51964f;
+}
+
+#nav .nav-a:nth-child(8) a{
+    background:#b8d2fb;
+    color:#4f6b97;
+}
+
+#nav .nav-a:nth-child(4),#nav .nav-a:nth-child(8){
+    margin-right:0;
+}
+
+.latestTipBox {
+    width: 100%;
+    margin-top: 5px
+}
+
+.latestTip {
+    margin: 0 auto;
+    color: gray;
+    width: 95%;
+    height: 25px;
+    line-height: 25px;
+}
+
+.bannerBox {
+    position: relative;
+    overflow: hidden;
+}
+
+.bannerAnimationBox {
+    width: 500%;
+    animation: switch 15s ease-out infinite;
+}
+
+.bannerIndicatorBoxOuter {
+    position: absolute;
+    bottom: 2%;
+    width: 100%;
+    text-align: center;
+}
+
+.bannerIndicatorBox {
+    overflow:hidden;
+    display:inline-block;
+}

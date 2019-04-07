@@ -1,0 +1,57 @@
+.header .back {
+    position: absolute;
+    left: 10px;
+    top: 5px;
+    color: white;
+}
+
+.header .home {
+    position: absolute;
+    float: right;
+    right: 10px;
+    top: 5px;
+    color: white;
+}
+
+.header svg {
+    width: 20px;
+    height: 20px;
+    fill: currentColor;
+}
+
+.readlink {
+    margin: 10px;
+    line-height: 38px;
+    overflow: hidden;
+}
+
+.readlink .rl {
+    margin-right: 2%;
+    background: #F77720;
+}
+
+.readlink .rr {
+    margin-left: 2%;
+    background: #ED424B;
+}
+
+.readlink a {
+    float: left;
+    display: block;
+    width: 32%;
+    text-align: center;
+    background: #65BBEC;
+    color: #fff;
+    font-size: 16px;
+    border-radius: 2px;
+    text-decoration: none;
+}
+
+.chapter-line {
+    border-bottom: 1px solid lightgrey;
+    width: 200%;
+    height: 20px;
+    transform-origin: 0 0;
+    transform: scale(0.5,0.5);
+    box-sizing: border-box;
+}

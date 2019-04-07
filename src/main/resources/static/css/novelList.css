@@ -1,0 +1,43 @@
+.header .back {
+    position: absolute;
+    left: 10px;
+    top: 5px;
+    color: white;
+}
+
+.header .home {
+    position: absolute;
+    float: right;
+    right: 10px;
+    top: 5px;
+    color: white;
+}
+
+.header svg {
+    width: 20px;
+    height: 20px;
+    fill: currentColor;
+}
+
+.loadMore{
+    height:30px;
+    width: 100%;
+    text-align: center;
+}
+
+.loadingBox {
+    height:30px;
+    display: inline-block;
+}
+
+.loading{
+    height: 100%;
+    margin:0 auto;
+    float: left;
+}
+
+.loadingText {
+    color: #888;
+    float: left;
+    line-height: 30px;
+}

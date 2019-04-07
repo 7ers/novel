@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <script type="text/javascript" src="/js/jquery-3.3.1.slim.min.js"></script>
+    <link rel="stylesheet" href="/css/common.css"/>
+    <link rel="stylesheet" href="/css/novel.css"/>
+</head>
+<body onload="document.getElementById('content').style.display = 'block'">
+<div id="content" style="display: none; background-color: #ccdef4;">
+    <div class="header">
+        <span>夜色小说</span>
+        <a class="back" href="javascript:history.back(-1);">
+            <svg id="" viewBox="0 0 1024 1024" width="100%" height="100%">
+                <title>chevron-left-circle</title>
+                <path class="path1" d="M142.462 193.664c91.869-91.869 214.016-142.464 343.938-142.464s252.067 50.595 343.936 142.464 142.464 214.014 142.464 343.936-50.595 252.069-142.464 343.938-214.014 142.462-343.936 142.462-252.069-50.594-343.938-142.462-142.462-214.016-142.462-343.938 50.594-252.067 142.462-343.936zM486.4 972.8c239.97 0 435.2-195.23 435.2-435.2s-195.23-435.2-435.2-435.2c-239.97 0-435.2 195.23-435.2 435.2s195.23 435.2 435.2 435.2z"></path>
+                <path class="path2" d="M563.2 819.2c6.552 0 13.102-2.499 18.102-7.499 9.997-9.997 9.997-26.206 0-36.203l-237.898-237.898 237.898-237.898c9.997-9.998 9.997-26.206 0-36.205-9.998-9.997-26.206-9.997-36.205 0l-256 256c-9.998 9.997-9.998 26.206 0 36.203l256 256c5 5 11.55 7.499 18.102 7.499z"></path>
+            </svg>
+        </a>
+        <a class="home" href="/index">
+            <svg id="" viewBox="0 0 1024 1024" width="100%" height="100%">
+                <title>home</title>
+                <path class="path1" d="M1017.382 622.826l-452.050-499.634c-14.051-15.533-32.992-24.086-53.333-24.086-0.002 0 0 0 0 0-20.339 0-39.282 8.555-53.334 24.086l-452.050 499.634c-9.485 10.485-8.675 26.674 1.808 36.158 4.899 4.432 11.043 6.616 17.168 6.616 6.982 0 13.938-2.838 18.992-8.426l109.016-120.491v410.517c0 42.347 34.453 76.8 76.8 76.8h563.2c42.347 0 76.8-34.453 76.8-76.8v-410.517l109.018 120.493c9.485 10.483 25.674 11.296 36.158 1.808 10.483-9.485 11.293-25.675 1.806-36.158zM614.4 972.8h-204.8v-230.4c0-14.115 11.485-25.6 25.6-25.6h153.6c14.115 0 25.6 11.485 25.6 25.6v230.4zM819.2 947.2c0 14.115-11.485 25.6-25.6 25.6h-128v-230.4c0-42.349-34.451-76.8-76.8-76.8h-153.6c-42.347 0-76.8 34.451-76.8 76.8v230.4h-128c-14.115 0-25.6-11.485-25.6-25.6v-467.106l291.832-322.552c4.222-4.667 9.68-7.237 15.368-7.237s11.146 2.57 15.366 7.235l291.834 322.552v467.107z"></path>
+            </svg>
+        </a>
+    </div>
+    <div class="read_book_name">
+        <img id="icon" th:src="${icon}"/>
+        <span id="title" style="display:block;" th:text="${title}"></span>
+    </div>
+    <div class="read_con color" style="font-size: 18px; line-height: 36px;" th:utext="${content}">
+    </div>
+    <div class="read_button clearfix cont_memu">
+        <div class="fl ta prevbtn2" style="background-color: #0faeff;color: white;">没有了</div>
+        <div class="fl ta prevbtn" style="display:none; background-color: #0faeff;color: white;" onclick="prev()">上一章</div>
+        <div class="fl ta selectbtn" style="height: 30px; line-height: 25px;">
+            <select style="-webkit-appearance:none; width: 90%; height: 100%; color:#0faeff; border: 1px solid #0faeff; outline: none;text-align:center; background: url('/images/select.png') no-repeat right center white;">
+                <option value="">&nbsp;&nbsp;第一章</option>
+                <option value="">&nbsp;&nbsp;第二章</option>
+                <option value="">&nbsp;&nbsp;第三章</option>
+            </select>
+        </div>
+        <div class="fl ta nextbtn" style="background-color: #0faeff;color: white;" onclick="next()">下一章</div>
+    </div>
+
+    <div id="layerBox">
+        <div class="layerPay_box ta layer_pay_move">
+            <p class="layerPay_wx f16" style="line-height:60px">章节跳转中...</p>
+            <div class="move_child move_child1"></div>
+            <div class="move_child move_child2"></div>
+            <div class="move_child move_child3"></div>
+        </div>
+    </div>
+</div>
+</body>
+<script type="text/javascript" src="/js/axios.js"></script>
+<script type="text/javascript">
+    let novelChapter;
+    let novelName;
+
+    window.onload = function() {
+        novelChapter = 1;
+        novelName = '[[${name}]]';
+        $("#content").css('display', 'block');
+    }
+
+    function getContent() {
+        $("#layerBox").show();
+
+        let param = new URLSearchParams();
+        param.append('name', novelName);
+        param.append('chapter', novelChapter);
+        axios({
+            method: 'post',
+            url: 'nextChapter',
+            data: param
+        }).then(response => {
+            if(response.data.code == 0) {
+                $(".read_con").html(response.data.msg);
+                if(novelChapter == 1){
+                    $('.prevbtn').hide();
+                    $('.prevbtn2').show();
+                }else{
+                    $('.prevbtn2').hide();
+                    $('.prevbtn').show();
+                }
+                window.scrollTo(0,0);
+            }
+
+            $("#layerBox").hide();
+        })
+    }
+
+    function prev() {
+        if (novelChapter == 1) {
+
+        } else {
+            novelChapter--;
+            getContent();
+        }
+    }
+    
+    function next() {
+        if (novelChapter >= 21) { //need payment
+
+        } else {
+            novelChapter++;
+            getContent();
+        }
+    }
+</script>
+</html>

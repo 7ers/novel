@@ -1,0 +1,122 @@
+/*通用样式*/
+#content{margin:0 auto;}
+/*手机*/
+@media screen and (max-width:600px){
+    #content{width:100%;}
+}
+/*平板*/
+@media screen and (min-width:600px) and (max-width:960px){
+    #content{width:600px;}
+}
+/*PC*/
+@media screen and (min-width:960px){
+    #content{width:760px;}
+}
+
+*{
+    margin:0;
+    padding:0;
+}
+
+input {
+    -webkit-appearance: none;
+    caret-color: #222;
+}
+
+a {
+    text-decoration:none;
+}
+
+.header {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    height: 40px;
+    line-height: 40px;
+    color: white;
+    text-align:center;
+    background-color: #4aa4ce;
+}
+
+.header span {
+    display: block;
+}
+
+.searchForm {
+    margin-top: 3px;
+    margin-bottom: 3px;
+    position: relative;
+    clear: both;
+}
+
+.searchForm_input {
+    border: 1px lightgrey solid;
+    margin-left: 1%;
+    font-size: 16px;
+    padding: 7px 0px 7px 1%;
+    width: 82%;
+    border-radius: 0;
+}
+
+.searchForm_btn {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 15%;
+    background: #0b6cbc;
+    font-size: 16px;
+    padding: 7px 0px;
+    border: none;
+    background: transparent url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAqCAMAAAD26OlUAAAC0FBMVEX////19fX19PX///+goKD///+goKD///////////+goKD09fWgoKD19fSgoKD///////+goKCgoKCgoKCgoKCgoKCgoKD////////////////+/v6goKD///+goKCgoKCgoKCgoKD//v7//v+goKD///////////+goKCgoKCgoKCgoKCgoKCgoKCgoKCgoKChoaGioqLDw8OgoKCkpKSzs7PY2NigoKD+/v/+//6jo6OgoKD////x8fHZ2dmgoKCgoKCgoKDw8PD///+goKCkpKSjo6OhoaHFxcWgoKCgoKD39/enp6egoKC0tLSgoKCgoKD///+goKCnp6f///+goKD39/egoKD8/Pz///////+goKD7+/v///////////////+goKCoqKigoKD////////R0dH///////////////+ioqL///////+hoaH////////19PSgoKC4uLj////////////////39/f4+Pj5+fn8/P36+vr7+/v8/Pz9/f3///+goKD29vahoaH9/fyoqKj4+Pn6+/v4+fj3+Pf6+fr7+vv6+vn49/j6+/r5+fj+/f329vf7+vr39/j49/f29/f9/P3JycnLy8v9/v78/fyrq6v5+vr4+fnj4+Pw8PDd3d35+Pj7/Pz8/f38/Pv5+Pn7+/ry8vL6+fn39vb3+Pj5+fr29/b9/v2ioqL9/f739/b39vf9/Pz6+vuqqqrFxcX7+/z8+/v19fWjo6PAwMCzs7OsrKz19vbKysr09PTs7Oz4+Pe+vr7ExMT5+vnv7++wsLDMy8ynp6fGx8bx8PD+/v7c3NzIyMjKysvb29u/v7+pqan7/PvHyMfGxsbf4ODx8fHf396xsbGkpKTg4ODz8vLY2dna2tru7u3x8fL19fTu7u6ysrLZ2dnh4uLc3d3+/f7y8/P29vX08/SmpqbS0tLKycnh4eHa2tvf398EurQLAAAAeHRSTlMAAABUVPv76iT66ABVAJdbi/X6IiPRx5/LDigAB5wICyT5AACGCv0IDM+c5yYyS/aLmfiY9/7emQAAm/cN9tmW+Cz4mub2/vX26s6h/iH9CYeNi9rU9Jzy+jLohPvSVtMm8dlT0JCtJ/b38f1am/4PMwDvqO998Hrq3T51AAADOklEQVR4XpXTBW8bSRyH4bXbnNNw4YLlJmXmK9MhMzMzwyyamRnDzMxYZIZjZr6v0P+40rgbR0r6ene1P+nJWLIUKtaclJ2ZSau2JmWmpSyGuYAau+lpDytJUzfNoOaPSWfmz1OKmrd69ub5N8W5u5co47pxRl7eaLd7WRSEA0W/88zhoqPh6ExaMRrO3RdlpzSOxqDDEWz+TSiJ0tvnit3MO7A7Z2gOBuWN8kaHo1l+kumLfvu9Ingfdqd98ljlcPuxfED0u+zC57Hyck2bRq6Rt/l8bLmc1fjwmdOWXwPXgetAbBsb8oVCbEhgWQHHMmGQS2NuzlTYZwWhQoDKMMHh+SvAW2cTmAIzrO/mhbKK7jL+At8tdHWVwYtQwQ2AXEngFlhDfBcPFw4oDHhCAYBrCHwB1r9Veo6vcrmqzC7ezOt5vZk3u/R8EcAHCbwZ1gmu3cbpOU7f3m6zmTmXzWyDXfU9wPUEvgkLcSYuwkEm7moWuCIcA/AdAm+B1cBFLPVcjcViOhSptzBMfY3JBH9EA1QTeBeswwyuhjnEkLAuBniMwHtgXWYMlfZKe2GhgSlkKu2l8IQKfwG4gcDbYP2jK7Xr7LTBUKnTldLR7DSjOwNwLYE7YIURfTWrdT9traOttBUGGgC4kcBHvoT5M1ZGdx1ye+oQbaxze/Yb6f/A9d5J4DOXYHf86UYeZETIaPUgt9EDb2gYH3gwncBt25tAHkBQayvcqAVBXoT6wKn35FCkvQEldLzF6XXWer0qVa23taEFqS4qoaEsKlbiYz9heeBrZ61K5ax1qhrgU92H3ZGncgGQMqq1WHZ80/PHoAoaVPV8G8ZOW30/BqRFL42cV+LC/s+/+2H4x//9AzDAjTxUQIlKlFV/oYzryGeyxPxHXxTJx58QAk1ipvbzsveehH+vyeIzn1YUd/bGWO/BYsWzz0meh3GDWC7KmKLgSjr7tWq1tr+zhFEkvFwgkbyijpfUq7NeU5Bez8qVSqWSN76Kl1DOW29nyxYulGXPSn8XFMBJCUSOLjlVIpGkSuGRLJG+nxyT4wWy6brkB9T4cgqWH1ITkn/9/RE1IalQfExNSH7yKTXxrgCZKvK/MvmOVwAAAABJRU5ErkJggg==) no-repeat 50% 50%;
+    background-size: 20px 20px;
+    border-top: 1px lightgrey solid;
+    border-bottom: 1px lightgrey solid;
+    border-right: 1px lightgrey solid;
+    margin-right: 1%;
+    border-radius: 0;
+}
+
+.container {
+    position: relative;
+    overflow: hidden;
+    width: 95%;
+    cursor: pointer;
+    margin: 0 auto;
+}
+
+.clearfix:after {
+    content:".";
+    display:block;
+    clear:both;
+    height:0;
+    overflow:hidden;
+    visibility:hidden;
+}
+
+.left-wrapper {
+    float:left;
+    width:73%;
+}
+
+.left {
+    position: absolute;
+    width: 73%;
+    height: 100%;
+    display:flex;
+    align-items:center;
+}
+
+.right {
+    float:right;
+    width:26%;
+    margin-left:1%;
+}
+
+.line {
+    border-bottom: 1px solid lightgrey;
+    width: 146%;
+    height: 20px;
+    transform-origin: 0 0;
+    transform: scale(0.5,0.5);
+    box-sizing: border-box;
+}

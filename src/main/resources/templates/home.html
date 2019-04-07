@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="/css/common.css"/>
+    <link rel="stylesheet" href="/css/home.css"/>
+</head>
+<body onload="document.getElementById('content').style.display = 'block'">
+<div id="content" style="display: none;">
+    <div class="header">
+        <span>夜色小说</span>
+        <a href="">
+            <svg viewBox="0 0 1024 1024" width="100%" height="100%">
+                <title>user</title>
+                <path class="path1" d="M486.4 563.2c-155.275 0-281.6-126.325-281.6-281.6s126.325-281.6 281.6-281.6 281.6 126.325 281.6 281.6-126.325 281.6-281.6 281.6zM486.4 51.2c-127.043 0-230.4 103.357-230.4 230.4s103.357 230.4 230.4 230.4c127.042 0 230.4-103.357 230.4-230.4s-103.358-230.4-230.4-230.4z">
+                </path>
+                <path class="path2" d="M896 1024h-819.2c-42.347 0-76.8-34.451-76.8-76.8 0-3.485 0.712-86.285 62.72-168.96 36.094-48.126 85.514-86.36 146.883-113.634 74.957-33.314 168.085-50.206 276.797-50.206 108.71 0 201.838 16.893 276.797 50.206 61.37 27.275 110.789 65.507 146.883 113.634 62.008 82.675 62.72 165.475 62.72 168.96 0 42.349-34.451 76.8-76.8 76.8zM486.4 665.6c-178.52 0-310.267 48.789-381 141.093-53.011 69.174-54.195 139.904-54.2 140.61 0 14.013 11.485 25.498 25.6 25.498h819.2c14.115 0 25.6-11.485 25.6-25.6-0.006-0.603-1.189-71.333-54.198-140.507-70.734-92.304-202.483-141.093-381.002-141.093z">
+                </path>
+            </svg>
+        </a>
+    </div>
+
+    <section class="pdrem">
+        <nav id="nav" class="pdrem clearfix">
+            <div class="nav-a">
+                <a href="novelList?category=0" title="游戏竞技">游戏竞技</a>
+            </div>
+            <div class="nav-a">
+                <a href="novelList?category=1" title="历史科幻">历史科幻</a>
+            </div>
+            <div class="nav-a">
+                <a href="novelList?category=2" title="都市生活">都市生活</a>
+            </div>
+            <div class="nav-a">
+                <a href="novelList?category=3" title="武侠仙侠">武侠仙侠</a>
+            </div>
+            <div class="nav-a">
+                <a href="novelList?category=4" title="玄幻奇幻">玄幻奇幻</a>
+            </div>
+            <div class="nav-a">
+                <a href="novelList?category=5" title="悬疑灵异">悬疑灵异</a>
+            </div>
+            <div class="nav-a">
+                <a href="novelList?category=6" title="古代言情">古代言情</a>
+            </div>
+            <div class="nav-a">
+                <a href="novelList?category=7" title="现代言情">现代言情</a>
+            </div>
+        </nav>
+    </section>
+    <form class="searchForm" method="post" action="">
+        <input type="text" name="keyword" class="searchForm_input" placeholder="输入书名或作者">
+        <input type="submit" class="searchForm_btn" value="">
+    </form>
+    <div class="bannerBox" id="bannerBox">
+        <div class="bannerAnimationBox" th:each="banner, bannerStat : ${banners}">
+            <img class="bannerImg" th:src="${banner.imgurl}" onclick="location.href='novelInfo?nid=0'"/>
+        </div>
+        <div class="bannerIndicatorBoxOuter">
+            <div class="bannerIndicatorBox">
+                <li class="focus-li"><div class="focus-item focus-item1"></div></li>
+                <li class="focus-li"><div class="focus-item focus-item2"></div></li>
+                <li class="focus-li"><div class="focus-item focus-item3"></div></li>
+                <li class="focus-li"><div class="focus-item focus-item4"></div></li>
+                <li class="focus-li"><div class="focus-item focus-item5"></div></li>
+            </div>
+        </div>
+    </div>
+    <div class="latestTipBox">
+        <div class="latestTip">最近更新</div>
+    </div>
+    <div class="line"></div>
+    <div id="fictionListBox" th:each="novel, novelStat : ${novels}">
+        <div class="container clearfix" onclick="location.href='novelInfo?nid=0'">
+            <div class="left-wrapper">
+                <div class="left">
+                    <div style="width: 100%; height: 100%;">
+                        <div>标题</div>
+                        <div style="color: #888;">简介</div>
+                    </div>
+                </div>
+            </div>
+            <img class="right" th:src="${novel.icon}" />
+        </div>
+        <div class="line"></div>
+    </div>
+</div>
+</body>
+</html>
