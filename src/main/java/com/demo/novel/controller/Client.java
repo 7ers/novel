@@ -138,10 +138,73 @@ public class Client {
         novelList.add(f10);
 
         model.addAttribute("novels", novelList);
-
         model.addAttribute("categoryName", C.categorys.get(category));
+        model.addAttribute("hasMore", true);
 
         return "novelList";
+    }
+
+    @RequestMapping(value = "/novelListMore")
+    @ResponseBody
+    public Object fictionListData(String page, int category) {
+        Map<String, Object> result = new HashMap<>();
+
+        List<Novel> novelList = new ArrayList<>();
+
+        Novel f1 = new Novel();
+        f1.setTitle("f1");
+        f1.setIcon("/images/210.jpeg");
+        novelList.add(f1);
+
+        Novel f2 = new Novel();
+        f2.setTitle("f2");
+        f2.setIcon("/images/211.jpeg");
+        novelList.add(f2);
+
+        Novel f3 = new Novel();
+        f3.setTitle("f3");
+        f3.setIcon("/images/212.jpeg");
+        novelList.add(f3);
+
+        Novel f4 = new Novel();
+        f4.setTitle("f4");
+        f4.setIcon("/images/213.jpeg");
+        novelList.add(f4);
+
+        Novel f5 = new Novel();
+        f5.setTitle("f5");
+        f5.setIcon("/images/214.jpeg");
+        novelList.add(f5);
+
+        Novel f6 = new Novel();
+        f6.setTitle("f6");
+        f6.setIcon("/images/215.jpeg");
+        novelList.add(f6);
+
+        Novel f7 = new Novel();
+        f7.setTitle("f7");
+        f7.setIcon("/images/210.jpeg");
+        novelList.add(f7);
+
+        Novel f8 = new Novel();
+        f8.setTitle("f8");
+        f8.setIcon("/images/211.jpeg");
+        novelList.add(f8);
+
+        Novel f9 = new Novel();
+        f9.setTitle("f9");
+        f9.setIcon("/images/212.jpeg");
+        novelList.add(f9);
+
+        Novel f10 = new Novel();
+        f10.setTitle("f10");
+        f10.setIcon("/images/213.jpeg");
+        novelList.add(f10);
+
+        result.put("novels", novelList);
+        result.put("hasMore", true);
+
+        return result;
     }
 
     @RequestMapping(value = "/novelInfo")
