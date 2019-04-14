@@ -1,9 +1,14 @@
 package com.demo.novel.controller;
 
-import org.apache.shiro.authc.IncorrectCredentialsException;
-import org.apache.shiro.authc.UnknownAccountException;
+import com.demo.novel.entity.UserInfo;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.*;
+import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
@@ -13,12 +18,18 @@ public class HomeController {
     @RequestMapping({"/","/index"})
     public String index(){
         System.out.println("HomeController.index");
-        return"/user/index";
+        return"layouthome";
+    }
+
+    @RequestMapping(value="/login",method= RequestMethod.GET)
+    public String login(){
+        System.out.println("Get:HomeController.login");
+        return "login";
     }
 
     // 这里如果不写method参数的话，默认支持所有请求，如果想缩小请求范围，还是要添加method来支持get, post等等某个请求。
-    @RequestMapping("/login")
-    public String login(HttpServletRequest request, Map<String, Object> map) throws Exception {
+    @RequestMapping(value="/login",method = RequestMethod.POST)
+    public String login(HttpServletRequest request, Map<Object,Object> map) throws Exception {
 
         System.out.println("HomeController.login");
 
@@ -33,7 +44,10 @@ public class HomeController {
             } else if (IncorrectCredentialsException.class.getName().equals(exception)) {
                 System.out.println("密码不正确");
                 msg = "账户不存在或密码不正确";
-            } else {
+            } else if(LockedAccountException.class.getName().equals(exception)){
+                System.out.println("用户状态不正确");
+                msg = "用户已经被锁定不能登录，请与管理员联系！";
+            }else {
                 System.out.println("其他异常");
                 msg = "其他异常";
             }
@@ -41,7 +55,13 @@ public class HomeController {
 
         map.put("msg", msg);
         // 此方法不处理登录成功,由shiro进行处理.
-        return "/login";
+        return "login";
+    }
+
+    @RequestMapping("/profile")
+    public String goProfile(){
+        System.out.println("----用户信息----");
+        return "profile";
     }
 
     @RequestMapping("/403")

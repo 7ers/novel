@@ -1,5 +1,6 @@
 package com.demo.novel.config;
 
+import com.demo.novel.entity.UserInfo;
 import com.demo.novel.shiro.NovelRealm;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.cache.CacheManager;
@@ -25,20 +26,24 @@ public class ShiroConfig {
 
         ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
         shiroFilterFactoryBean.setSecurityManager(securityManager);
-
+        // 如果不设置默认会自动寻找Web工程根目录下的"/login.jsp"页面
+        shiroFilterFactoryBean.setLoginUrl("/login");
+        // 登录成功后要跳转的链接
+        shiroFilterFactoryBean.setSuccessUrl("/index");
+        //未授权界面;
+        shiroFilterFactoryBean.setUnauthorizedUrl("/403");
         Map<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
         filterChainDefinitionMap.put("/logout", "logout");
         filterChainDefinitionMap.put("/index", "user");
         filterChainDefinitionMap.put("/", "user");
-        filterChainDefinitionMap.put("/favicon.ico", "anon");
+        filterChainDefinitionMap.put("/favicon.ico", "anon");//anon表示不需要验证身份就能访问
+        filterChainDefinitionMap.put("/adminlte/**", "anon"); //匿名访问静态资源
         filterChainDefinitionMap.put("/css/**", "anon"); //匿名访问静态资源
         filterChainDefinitionMap.put("/js/**", "anon"); //匿名访问静态资源
         filterChainDefinitionMap.put("/images/**", "anon"); //匿名访问静态资源
-        filterChainDefinitionMap.put("/fragments/**", "anon"); //匿名访问静态资源
-        filterChainDefinitionMap.put("/**", "authc");
-        //authc表示需要验证身份才能访问，还有一些比如anon表示不需要验证身份就能访问等。
-        shiroFilterFactoryBean.setLoginUrl("/login");
-        shiroFilterFactoryBean.setSuccessUrl("/index");
+        filterChainDefinitionMap.put("/img/**", "anon"); //匿名访问静态资源
+//        filterChainDefinitionMap.put("/fragments/**", "anon"); //匿名访问静态资源
+        filterChainDefinitionMap.put("/**", "authc");//登录过可以访问，authc表示需要验证身份才能访问。
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
         return shiroFilterFactoryBean;
     }

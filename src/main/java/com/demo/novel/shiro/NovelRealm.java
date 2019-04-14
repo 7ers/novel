@@ -4,10 +4,12 @@ import com.demo.novel.dao.PermsInfoMapper;
 import com.demo.novel.dao.RoleInfoMapper;
 import com.demo.novel.entity.UserInfo;
 import com.demo.novel.service.UserInfoService;
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
+import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,7 +50,7 @@ public class NovelRealm extends AuthorizingRealm {
         System.out.println("----->>userInfo="+userInfo);
         if(userInfo == null){
             ////没有返回登录用户名对应的SimpleAuthenticationInfo对象时,就会在LoginController中抛出UnknownAccountException异常
-            return null;
+            throw new UnknownAccountException();
         }
         SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(
                 userInfo, //用户名
@@ -56,6 +58,17 @@ public class NovelRealm extends AuthorizingRealm {
                 ByteSource.Util.bytes(userInfo.getCredentialsSalt()),//salt=username+salt
                 getName()  //realm name
         );
+
+        if (0==Integer.valueOf(userInfo.getState())) {
+            throw new LockedAccountException(); // 帐号锁定
+        }
+
+        // 当验证都通过后，把用户信息放在session里
+        Session session = SecurityUtils.getSubject().getSession();
+        session.setAttribute("userSession", userInfo);
+        session.setAttribute("userSessionId", userInfo.getUserid());
+
         return authenticationInfo;
+
     }
 }
