@@ -13,7 +13,7 @@ public class HomeController {
     @RequestMapping({"/","/index"})
     public String index(){
         System.out.println("HomeController.index");
-        return"/index";
+        return"/user/index";
     }
 
     // 这里如果不写method参数的话，默认支持所有请求，如果想缩小请求范围，还是要添加method来支持get, post等等某个请求。
@@ -41,7 +41,7 @@ public class HomeController {
 
         map.put("msg", msg);
         // 此方法不处理登录成功,由shiro进行处理.
-        return "login";
+        return "/login";
     }
 
     @RequestMapping("/403")
