@@ -21,15 +21,6 @@ import java.util.Map;
 
 @Controller
 public class Client {
-    @RequestMapping("/")
-    private String goIndex(){
-        return "index";
-    }
-
-    @RequestMapping("/test")
-    private String test(){
-        return "test";
-    }
 
     @RequestMapping("/home")
     private String home(Model model) {

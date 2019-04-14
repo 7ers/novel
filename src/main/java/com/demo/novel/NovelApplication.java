@@ -9,6 +9,7 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 
 //@SpringBootApplication(exclude={DataSourceAutoConfiguration.class, MybatisAutoConfiguration.class})
 @SpringBootApplication
+@MapperScan("com.demo.novel.dao")
 public class NovelApplication {
 
 	public static void main(String[] args) {

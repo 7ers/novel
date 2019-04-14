@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.demo.novel.dao.RoleInfoMapper">
+  <resultMap id="BaseResultMap" type="com.demo.novel.entity.RoleInfo">
+    <id column="roleid" jdbcType="INTEGER" property="roleid" />
+    <result column="available" jdbcType="INTEGER" property="available" />
+    <result column="roledesc" jdbcType="VARCHAR" property="roledesc" />
+    <result column="roleval" jdbcType="VARCHAR" property="roleval" />
+    <result column="createtime" jdbcType="TIMESTAMP" property="createtime" />
+    <result column="updatetime" jdbcType="TIMESTAMP" property="updatetime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    roleid, available, roledesc, roleval, createtime, updatetime
+  </sql>
+  <select id="findRoleByUsername" resultMap="BaseResultMap">
+          SELECT
+            t_user_info.userid,
+            t_user_info.`name`,
+            t_user_info.`pwd`,
+            t_user_info.salt,
+            t_user_info.state,
+            t_user_info.username,
+            t_role_info.roleid,
+            t_role_info.available,
+            t_role_info.roledesc,
+            t_role_info.roleval
+        FROM
+            t_user_info
+        RIGHT JOIN t_user_role ON t_user_info.userid = t_user_role.userid
+        LEFT JOIN t_role_info ON t_user_role.roleid = t_role_info.roleid
+        WHERE username=#{username}
+    </select>
+</mapper>

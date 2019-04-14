@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.demo.novel.dao.PermsInfoMapper">
+  <resultMap id="BaseResultMap" type="com.demo.novel.entity.PermsInfo">
+    <id column="permsid" jdbcType="INTEGER" property="permsid" />
+    <result column="permsname" jdbcType="VARCHAR" property="permsname" />
+    <result column="permstype" jdbcType="VARCHAR" property="permstype" />
+    <result column="permsval" jdbcType="VARCHAR" property="permsval" />
+    <result column="createtime" jdbcType="TIMESTAMP" property="createtime" />
+    <result column="updatetime" jdbcType="TIMESTAMP" property="updatetime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    permsid, permsname, permstype, permsval, createtime, updatetime
+  </sql>
+  <select id="findPermissionByRoleId" resultMap="BaseResultMap">
+        SELECT
+            t_role_info.roleid,
+            t_role_info.available,
+            t_role_info.roledesc,
+            t_role_info.roleval,
+            t_perms_info.`permsname`,
+            t_perms_info.permstype,
+            t_perms_info.permsval
+        FROM
+            (t_perms_info, t_role_info)
+        RIGHT JOIN t_role_perms ON t_role_info.roleid = t_role_perms.permsid
+        AND t_role_perms.roleid = t_role_info.roleid
+        WHERE t_role_info.roleid=#{roleId}
+    </select>
+</mapper>
