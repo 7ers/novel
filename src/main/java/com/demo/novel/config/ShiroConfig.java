@@ -26,12 +26,6 @@ public class ShiroConfig {
 
         ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
         shiroFilterFactoryBean.setSecurityManager(securityManager);
-        // 如果不设置默认会自动寻找Web工程根目录下的"/login.jsp"页面
-        shiroFilterFactoryBean.setLoginUrl("/login");
-        // 登录成功后要跳转的链接
-        shiroFilterFactoryBean.setSuccessUrl("/index");
-        //未授权界面;
-        shiroFilterFactoryBean.setUnauthorizedUrl("/403");
         Map<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
         filterChainDefinitionMap.put("/logout", "logout");
         filterChainDefinitionMap.put("/index", "user");
@@ -42,8 +36,14 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/js/**", "anon"); //匿名访问静态资源
         filterChainDefinitionMap.put("/images/**", "anon"); //匿名访问静态资源
         filterChainDefinitionMap.put("/img/**", "anon"); //匿名访问静态资源
-//        filterChainDefinitionMap.put("/fragments/**", "anon"); //匿名访问静态资源
+        filterChainDefinitionMap.put("/layout/**", "anon"); //匿名访问静态资源
         filterChainDefinitionMap.put("/**", "authc");//登录过可以访问，authc表示需要验证身份才能访问。
+        // 如果不设置默认会自动寻找Web工程根目录下的"/login.jsp"页面
+        shiroFilterFactoryBean.setLoginUrl("/login");
+        // 登录成功后要跳转的链接
+        shiroFilterFactoryBean.setSuccessUrl("/index");
+        //未授权界面;
+        shiroFilterFactoryBean.setUnauthorizedUrl("/403");
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
         return shiroFilterFactoryBean;
     }

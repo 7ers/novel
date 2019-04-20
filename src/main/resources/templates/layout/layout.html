@@ -1,14 +1,45 @@
+<!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
     <head>
         <meta charset="UTF-8"></meta>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <title>Layout</title>
+        <!-- Tell the browser to be responsive to screen width -->
+        <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+        <link rel="stylesheet" th:href="@{/adminlte/bower_components/bootstrap/dist/css/bootstrap.min.css}">
+        <link rel="stylesheet" th:href="@{/adminlte/bower_components/font-awesome/css/font-awesome.min.css}">
+        <!-- Ionicons -->
+        <link rel="stylesheet" th:href="@{/adminlte/bower_components/Ionicons/css/ionicons.min.css}">
+        <!-- DataTables -->
+        <link rel="stylesheet" th:href="@{/adminlte/bower_components/datatables_net-bs/css/dataTables.bootstrap.min.css}">
+        <!-- Theme style -->
+        <link rel="stylesheet" th:href="@{/adminlte/dist/css/AdminLTE.min.css}">
+        <!-- AdminLTE Skins. We have chosen the skin-blue for this starter
+              page. However, you can choose any other skin. Make sure you
+              apply the skin class to the body tag so the changes take effect. -->
+        <link rel="stylesheet" th:href="@{/adminlte/dist/css/skins/skin-blue.min.css}">
+
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+        <script src="/adminlte/js/html5shiv.min.js"></script>
+        <script src="/adminlte/js/respond.min.js"></script>
+        <![endif]-->
+        <!-- REQUIRED JS SCRIPTS -->
+
+        <!-- jQuery 3 -->
+        <script th:src="@{/adminlte/bower_components/jquery/dist/jquery.min.js}"></script>
+        <!-- Bootstrap 3.3.7 -->
+        <script th:src="@{/adminlte/bower_components/bootstrap/dist/js/bootstrap.min.js}"></script>
+        <!-- AdminLTE App -->
+        <script th:src="@{/adminlte/dist/js/adminlte.min.js}"></script>
     </head>
-    <body>
-        <div >
-            <div th:replace="/fragments/header :: header"></div>
-            <div th:replace="/fragments/left :: left"></div>
-            <div layout:fragment="content" > content</div>
-            <div th:replace="/fragments/footer :: footer"></div>
+    <body class="hold-transition skin-blue sidebar-mini">
+        <div class="wrapper">
+            <div th:replace="/layout/fragments/header :: header"></div>
+            <div th:replace="/layout/fragments/left :: left"></div>
+            <section class="content-wrapper" layout:fragment="content" > content</section>
+            <div th:replace="/layout/fragments/footer :: footer"></div>
         </div>
     </body>
 </html>
