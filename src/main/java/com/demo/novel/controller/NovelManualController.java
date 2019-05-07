@@ -3,6 +3,8 @@ package com.demo.novel.controller;
 import com.demo.novel.entity.Novel;
 import com.demo.novel.entity.NovelBase;
 import com.demo.novel.service.NovelManualService;
+import com.demo.novel.util.C;
+import com.demo.novel.util.Constants;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
@@ -71,26 +73,26 @@ public class NovelManualController {
         novelBase.setAbstract(abstracts);
         NovelBase nl = novelManualService.selectByBookName(novelBase.getBookname());
         if(nl != null)
-            return "error";
+            return Constants.RET_CODE_ERROR;
         try {
             int res = novelManualService.insert(novelBase);
-            return "success";
+            return Constants.RET_CODE_SUCCESS;
         } catch (Exception e) {
             e.printStackTrace();
-            return "fail";
+            return Constants.RET_CODE_FAIL;
         }
     }
 
     @RequestMapping(value="/novel/delete",method = RequestMethod.POST)
     public String delNovel(@RequestParam(required=true) int id){
         if(StringUtils.isEmpty(id)){
-            return "fail";
+            return Constants.RET_CODE_FAIL;
         }
         try {
             novelManualService.deleteByPrimaryKey(id);
-            return "success";
+            return Constants.RET_CODE_SUCCESS;
         } catch (Exception e){
-            return "fail";
+            return Constants.RET_CODE_FAIL;
         }
     }
 }

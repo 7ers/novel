@@ -17,7 +17,7 @@
             t_user_info.userid,
             t_user_info.`name`,
             t_user_info.`pwd`,
-            t_user_info.salt,
+            t_user_info.email,
             t_user_info.state,
             t_user_info.username,
             t_role_info.roleid,
@@ -30,4 +30,26 @@
         LEFT JOIN t_role_info ON t_user_role.roleid = t_role_info.roleid
         WHERE username=#{username}
     </select>
+    <select id="queryRoleListWithSelected" parameterType="int" resultMap="BaseResultMap">
+        SELECT r.roleid,r.roledesc,
+        (CASE WHEN (SELECT ur.roleId FROM t_user_role ur WHERE ur.userid= #{userid} AND ur.roleid = r.roleid) THEN 1 ELSE 0 END) AS selected
+        FROM t_role_info r
+    </select>
+    <select id="queryRoleList" resultMap="BaseResultMap">
+        SELECT roleid,roledesc
+        FROM t_role_info
+    </select>
+    <select id="queryRoleByRoleDesc" parameterType="java.lang.String" resultMap="BaseResultMap">
+        SELECT roleid,roledesc
+        FROM t_role_info
+        WHERE roledesc=#{roledesc,jdbcType=VARCHAR}
+    </select>
+    <insert id="addRole" useGeneratedKeys="true" keyProperty="roleid" parameterType="com.demo.novel.entity.UserInfo">
+        insert into t_role_info (roledesc)
+        values (#{roledesc,jdbcType=VARCHAR})
+  </insert>
+    <delete id="deleteByRoleId" parameterType="java.lang.Integer">
+        delete from t_role_info
+        where roleid=#{roleid,jdbcType=INTEGER}
+    </delete>
 </mapper>

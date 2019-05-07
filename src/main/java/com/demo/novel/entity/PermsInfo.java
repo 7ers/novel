@@ -15,6 +15,26 @@ public class PermsInfo {
 
     private Date updatetime;
 
+    public String getChecked() {
+        return checked;
+    }
+
+    public void setChecked(String checked) {
+        this.checked = checked;
+    }
+
+    private String checked;
+
+    public Integer getParentid() {
+        return parentid;
+    }
+
+    public void setParentid(Integer parentid) {
+        this.parentid = parentid;
+    }
+
+    private Integer parentid;
+
     public Integer getPermsid() {
         return permsid;
     }

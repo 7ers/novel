@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.demo.novel.dao.UserRoleMapper">
+  <resultMap id="BaseResultMap" type="com.demo.novel.entity.UserRole">
+    <result column="userid" jdbcType="INTEGER" property="userid" />
+    <result column="roleid" jdbcType="INTEGER" property="roleid" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    userid, roleid
+  </sql>
+    <delete id="deleteByUserId" parameterType="java.lang.Integer">
+    delete from t_user_role
+    where userid = #{userid,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="com.demo.novel.entity.UserRole">
+    insert into t_user_role (userid, roleid)
+    values (#{userid,jdbcType=INTEGER}, #{roleid,jdbcType=INTEGER})
+  </insert>
+  <select id="findUserIdByRoleId" parameterType="int" resultType="int">
+    select userId from t_user_role where roleId = #{roleId}
+  </select>
+</mapper>

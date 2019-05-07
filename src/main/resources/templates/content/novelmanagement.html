@@ -17,7 +17,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <!-- AdminLTE for demo purposes -->
   <script src="/adminlte/dist/js/demo.js"></script>
   <script src="/adminlte/js/layer.js"></script>
-
   <!-- page script -->
   <script>
     var table;
@@ -26,7 +25,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
         var check = $(this).prop("checked");
         $(".checkchild").prop("checked", check);
       });
-
+      init_input_file();
       table = $('#datatable').dataTable( {
         "dom": '<"top"i>rt<"bottom"flp><"clear">',
         'language': {
@@ -91,6 +90,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
           { "data": "author" },
           { "data": "category" },
           { "data": "status" },
+          {
+            "sClass": "text-center",
+            "data": "id",
+            "render": function (data, type, full, meta) {
+              return '<button id="upload-btn" type="button"  onclick="$(\'#uploadfile\').modal();" class="btn-link"  value="'+data+'">上传文件</button>';
+            },
+            "bSortable": false
+          },
         ],
         columnDefs:[
           { "orderable": false, "targets": 1 },
@@ -109,6 +116,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             },
             "targets": 6
           },
+          { "orderable": false, "targets": 7 },
         ],
         "order":[]
       } );
@@ -219,6 +227,69 @@ scratch. This page gets rid of all links and provides the needed markup only.
         });
       });
     }
+
+    //初始化选择要素
+    function init_input_file() {
+      $(".input-file").before(
+              function() {
+                if ( ! $(this).prev().hasClass('input-ghost') ) {
+                  var element = $(".input-ghost");
+                  element.change(function(){
+                    element.next(element).find('input').val((element.val()).split('\\').pop());
+                  });
+                  $(this).find("button.btn-choose").click(function(){
+                    element.click();
+                  });
+                  $(this).find("button.btn-reset").click(function(){
+                    element.val(null);
+                    $(this).parents(".input-file").find('input').val('');
+                  });
+                  $(this).find('input').css("cursor","pointer");
+                  $(this).find('input').mousedown(function() {
+                    $(this).parents('.input-file').prev().click();
+                    return false;
+                  });
+                  return element;
+                }
+              }
+      );
+    }
+
+    //添加内容
+    function upload() {
+      var filename = $("#file-upload").val();
+      var formdata = new FormData($("#uploadForm")[0]);
+      formdata.set("id",$("#upload-btn").val())
+      if(filename == "" || filename == undefined || filename == null){
+        return layer.msg('请选择一个文件', function(){
+          //关闭后的操作
+          $("#file-upload").focus();
+        });
+      }
+
+      $.ajax({
+        cache: false,
+        type: "POST",
+        url:'uploadfile',
+        data:formdata,// 你的formid
+        async: false,
+        processData:false,//这个很有必要，不然不行
+        contentType: false,
+        success: function(data) {
+          alert(data);
+          if(data=="success"){
+            layer.msg('上传成功');
+            $('#uploadfile').modal('hide');
+          }else if(data=="error"){
+            layer.msg('该小说文件已存在')
+            $('#uploadfile').modal('hide');
+          }else {
+            layer.msg('上传失败');
+            $('#uploadfile').modal('hide');
+          }
+        }
+      });
+    }
   </script>
 </head>
   <!-- Content Wrapper. Contains page content -->
@@ -258,7 +329,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <button type="button"  onclick="search();" class="btn btn-primary">查询</button>
                 <button type="button"  onclick="$('#addNovel').modal();" class="btn btn-info" style="float: right; margin-right: 1px;">新增</button>
                 <button type="button"  onclick="delByID();" class="btn btn-info" style="float: right; margin-right: 1px;">删除</button>
-                <!--<button type="button"  onclick="allotRole();" class="btn btn-info" style="float: right; margin-right: 1px;">分配角色</button>-->
               </form>
             </div>
             <!-- /.box-header -->
@@ -282,6 +352,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         <th>作者</th>
                         <th>分类</th>
                         <th>状态</th>
+                        <th>操作</th>
                       </tr>
                       </thead>
                     </table>
@@ -345,7 +416,45 @@ scratch. This page gets rid of all links and provides the needed markup only.
         </div>
       </div>
     </div>
-    <!--/添加弹框-->
+    <!--./添加弹框-->
+    <!--uploadfile-->
+    <div class="modal fade" id="uploadfile" tabindex="-1" role="dialog" aria-labelledby="addroleLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="addfileLabel">上传文件</h4>
+          </div>
+          <div class="modal-body">
+            <!--<form id="form" action="upload" method="post" enctype="multipart/form-data">-->
+              <!--<div class="row form-group">-->
+                <!--<label class="col-md-4">小说上传:</label>-->
+                <!--<div class="col-sm-12">-->
+                  <!--<input id="input-id" name="file" multiple="multiple" type="file" data-show-caption="true"/>-->
+                <!--</div>-->
+              <!--</div>-->
+            <!--</form>-->
+            <form id="uploadForm" enctype="multipart/form-data">
+              <!-- COMPONENT START -->
+              <input type="file" name="file" id="file-upload" class="input-ghost" style="visibility:hidden; height:0"/>
+              <div class="form-group">
+                <div class="input-group input-file" name="Fichier1">
+                  <input type="text" class="form-control" placeholder='选择一个文件...'/>
+                  <span class="input-group-btn">
+                      <button class="btn btn-default btn-choose" type="button">选择文件</button>
+                  </span>
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            <button type="button" onclick="upload();" class="btn btn-primary">保存</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--./uploadfile-->
   </section>
   <!-- /.content-wrapper -->
 <!-- ./wrapper -->

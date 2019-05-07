@@ -3,7 +3,7 @@ package com.demo.novel.util;
 public class JsonResult {
     private Object obj;
     private String msg;
-    private Integer code;
+    private String code;
 
     public Object getObj() {
         return obj;
@@ -21,11 +21,11 @@ public class JsonResult {
         this.msg = msg;
     }
 
-    public Integer getCode() {
+    public String getCode() {
         return code;
     }
 
-    public void setCode(Integer code) {
+    public void setCode(String code) {
         this.code = code;
     }
 }

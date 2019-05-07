@@ -3,27 +3,44 @@
 <mapper namespace="com.demo.novel.dao.UserInfoMapper">
   <resultMap id="BaseResultMap" type="com.demo.novel.entity.UserInfo">
     <id column="userid" jdbcType="INTEGER" property="userid" />
-    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="userdesc" jdbcType="VARCHAR" property="userdesc" />
     <result column="state" jdbcType="VARCHAR" property="state" />
     <result column="pwd" jdbcType="VARCHAR" property="pwd" />
-    <result column="salt" jdbcType="VARCHAR" property="salt" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
     <result column="createtime" jdbcType="TIMESTAMP" property="createtime" />
     <result column="updatetime" jdbcType="TIMESTAMP" property="updatetime" />
     <result column="username" jdbcType="VARCHAR" property="username" />
   </resultMap>
   <sql id="Base_Column_List">
-    userid, name, state, pwd, salt, createtime, updatetime, username
+    userid, userdesc, state, pwd, email, createtime, updatetime, username
   </sql>
   <select id="findByUsername" resultMap="BaseResultMap">
         SELECT
             t_user_info.userid,
             t_user_info.username,
             t_user_info.`pwd`,
-            t_user_info.salt,
+            t_user_info.email,
             t_user_info.state,
-            t_user_info.username
+            t_user_info.userdesc
         FROM
             t_user_info
         WHERE username=#{username}
     </select>
+    <select id="selectByEntity" parameterType="com.demo.novel.entity.UserInfo" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from t_user_info
+        WHERE username LIKE CONCAT('%',#{username,jdbcType=VARCHAR},'%')
+        AND state LIKE CONCAT('%',#{state,jdbcType=VARCHAR},'%')
+    </select>
+    <insert id="addUser" useGeneratedKeys="true" keyProperty="userid" parameterType="com.demo.novel.entity.UserInfo">
+        insert into t_user_info (username, pwd,
+          email, state, createtime, updatetime)
+        values (#{username,jdbcType=VARCHAR}, #{pwd,jdbcType=VARCHAR},
+          #{email,jdbcType=VARCHAR}, #{state,jdbcType=VARCHAR},now(), now())
+  </insert>
+    <delete id="deleteByUserId" parameterType="java.lang.Integer">
+        delete from t_user_info
+        where userid=#{userid,jdbcType=INTEGER}
+    </delete>
 </mapper>

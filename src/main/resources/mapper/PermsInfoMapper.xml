@@ -8,9 +8,10 @@
     <result column="permsval" jdbcType="VARCHAR" property="permsval" />
     <result column="createtime" jdbcType="TIMESTAMP" property="createtime" />
     <result column="updatetime" jdbcType="TIMESTAMP" property="updatetime" />
+    <result column="parentid" jdbcType="INTEGER" property="parentid"/>
   </resultMap>
   <sql id="Base_Column_List">
-    permsid, permsname, permstype, permsval, createtime, updatetime
+    permsid, permsname, permstype, permsval, parentid, createtime, updatetime
   </sql>
   <select id="findPermissionByRoleId" resultMap="BaseResultMap">
         SELECT
@@ -27,4 +28,43 @@
         AND t_role_perms.roleid = t_role_info.roleid
         WHERE t_role_info.roleid=#{roleId}
     </select>
+    <select id="queryAll" resultMap="BaseResultMap">
+      	SELECT
+        <include refid="Base_Column_List" />
+		FROM t_perms_info
+    </select>
+    <select id="selectByName" parameterType="java.lang.String" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM t_perms_info
+        where permsname=#{permsname, jdbcType=VARCHAR}
+    </select>
+    <select id="loadUserPerms" parameterType="java.util.HashMap" resultMap="BaseResultMap">
+        SELECT pi.permsid,pi.permsname,pi.permsval
+        FROM t_perms_info pi LEFT JOIN t_role_perms rp
+        ON pi.permsid = rp.permsid
+        LEFT JOIN t_user_role ur
+        ON rp.roleId =ur.roleId
+        WHERE ur.userid=#{userid}
+        <if test="type != null">
+            AND pi.permstype= #{permstype}
+        </if>
+    </select>
+    <select id="queryPermsListByRoleID" parameterType="int" resultMap="BaseResultMap">
+        SELECT pi.permsid,pi.permsname,pi.parentid,pi.permsval,pi.permstype,pi.createtime,pi.updatetime,
+		(CASE WHEN EXISTS(SELECT 1
+		FROM t_role_perms rp WHERE rp.permsid=pi.permsid AND rp.roleId=#{roleid})
+		THEN 'true' ELSE 'false' END) AS checked
+		FROM t_perms_info pi
+		WHERE pi.parentid !=0
+    </select>
+    <insert id="addPerms" useGeneratedKeys="true" keyProperty="permsid" parameterType="com.demo.novel.entity.PermsInfo">
+        INSERT INTO t_perms_info(permsname,permsval,permstype,parentid,createtime,updatetime)
+        values (#{permsname,jdbcType=VARCHAR}, #{permsval,jdbcType=VARCHAR},
+          #{permstype,jdbcType=VARCHAR},#{parentid,jdbcType=INTEGER},now(), now())
+    </insert>
+    <delete id="delById" parameterType="java.lang.Integer">
+        delete from t_perms_info
+        where permsid=#{permsid,jdbcType=INTEGER}
+    </delete>
 </mapper>

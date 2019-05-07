@@ -1,10 +1,12 @@
 package com.demo.novel.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-public class UserInfo {
+public class UserInfo implements Serializable {
+
     private Integer userid;
 
     public Integer getUserid() {
@@ -15,16 +17,25 @@ public class UserInfo {
         this.userid = userid;
     }
 
-    private String name;
+    private String userdesc;
 
     private String state;
+    private String pwd;
 
-    public String getName() {
-        return name;
+    private String email;
+
+    private Date createtime;
+
+    private Date updatetime;
+
+    private String username;
+
+    public String getUserdesc() {
+        return userdesc;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setUserdesc(String userdesc) {
+        this.userdesc = userdesc;
     }
 
     public String getState() {
@@ -43,12 +54,12 @@ public class UserInfo {
         this.pwd = pwd;
     }
 
-    public String getSalt() {
-        return salt;
+    public String getEmail() {
+        return email;
     }
 
-    public void setSalt(String salt) {
-        this.salt = salt;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public Date getCreatetime() {
@@ -75,22 +86,4 @@ public class UserInfo {
         this.username = username;
     }
 
-    private String pwd;
-
-    private String salt;
-
-    private Date createtime;
-
-    private Date updatetime;
-
-    private String username;
-
-    /**
-     * 密码盐.
-     * @return
-     */
-    public String getCredentialsSalt(){
-
-        return this.username+this.salt;
-    }
 }

@@ -46,24 +46,8 @@
             <property name="enableSubPackages" value="false"/>
         </javaClientGenerator>
         <!-- 指定数据库表  多个表示,可用多个table标签-->
-        <table tableName="t_novel_base"
-               domainObjectName="NovelBase"
-               enableCountByExample="false"
-               enableUpdateByExample="false"
-               enableDeleteByExample="false"
-               enableSelectByExample="false"
-               selectByExampleQueryId="false">
-        </table>
-        <table tableName="t_novel_section"
-               domainObjectName="NovelSection"
-               enableCountByExample="false"
-               enableUpdateByExample="false"
-               enableDeleteByExample="false"
-               enableSelectByExample="false"
-               selectByExampleQueryId="false">
-        </table>
-        <table tableName="t_novel_chapter"
-               domainObjectName="NovelChapter"
+        <table tableName="t_user_session"
+               domainObjectName="UserSession"
                enableCountByExample="false"
                enableUpdateByExample="false"
                enableDeleteByExample="false"
