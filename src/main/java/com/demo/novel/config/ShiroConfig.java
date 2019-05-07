@@ -4,7 +4,9 @@ import at.pollux.thymeleaf.shiro.dialect.ShiroDialect;
 import com.demo.novel.entity.PermsInfo;
 import com.demo.novel.service.PermsInfoService;
 import com.demo.novel.shiro.DBShiroSessionDAO;
+import com.demo.novel.shiro.GlobalExceptionResolver;
 import com.demo.novel.shiro.NovelRealm;
+import com.demo.novel.shiro.StatelessSessionManager;
 import com.github.pagehelper.util.StringUtil;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.cache.CacheManager;
@@ -21,6 +23,7 @@ import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.filter.DelegatingFilterProxy;
+import org.springframework.web.servlet.HandlerExceptionResolver;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -40,6 +43,15 @@ public class ShiroConfig {
     @Bean
     public ShiroDialect shiroDialect() {
         return new ShiroDialect();
+    }
+
+    /**
+     * 注册全局异常处理
+     * @return
+     */
+    @Bean("myGlobalhandlerExceptionResolver")
+    public HandlerExceptionResolver handlerExceptionResolver(){
+        return new GlobalExceptionResolver();
     }
 
     /**
@@ -113,7 +125,7 @@ public class ShiroConfig {
         defaultWebSecurityManager.setRealm(myShiroRealm()); //将Realm注入到SecurityManager中。
         defaultWebSecurityManager.setCacheManager(ehCacheManager()); //注入缓存对象。
         defaultWebSecurityManager.setSessionManager(sessionManager());
-        defaultWebSecurityManager.setRememberMeManager(cookieRememberMeManager()); //注入rememberMeManager;
+//        defaultWebSecurityManager.setRememberMeManager(cookieRememberMeManager()); //注入rememberMeManager;
         return defaultWebSecurityManager;
     }
 
