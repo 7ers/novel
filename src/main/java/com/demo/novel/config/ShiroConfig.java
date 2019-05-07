@@ -2,7 +2,6 @@ package com.demo.novel.config;
 
 import at.pollux.thymeleaf.shiro.dialect.ShiroDialect;
 import com.demo.novel.entity.PermsInfo;
-import com.demo.novel.entity.UserInfo;
 import com.demo.novel.service.PermsInfoService;
 import com.demo.novel.shiro.DBShiroSessionDAO;
 import com.demo.novel.shiro.NovelRealm;
@@ -11,7 +10,6 @@ import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.cache.CacheManager;
 import org.apache.shiro.cache.ehcache.EhCacheManager;
 import org.apache.shiro.mgt.SecurityManager;
-import org.apache.shiro.spring.LifecycleBeanPostProcessor;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.CookieRememberMeManager;
@@ -19,8 +17,10 @@ import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.apache.shiro.web.servlet.SimpleCookie;
 import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.filter.DelegatingFilterProxy;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -53,7 +53,7 @@ public class ShiroConfig {
      3、部分过滤器可指定参数，如perms，roles
      *
      */
-    @Bean
+    @Bean("shiroFilter")
     public ShiroFilterFactoryBean shiroFilterFactoryBean(SecurityManager securityManager) {
 
         ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
@@ -70,8 +70,6 @@ public class ShiroConfig {
 
         //配置退出 过滤器,其中的具体的退出代码Shiro已经替我们实现了
         filterChainDefinitionMap.put("/logout", "logout");
-//        filterChainDefinitionMap.put("/index", "user");
-//        filterChainDefinitionMap.put("/", "user");
         filterChainDefinitionMap.put("/adminlte/**", "anon"); //匿名访问静态资源
         filterChainDefinitionMap.put("/css/**", "anon"); //匿名访问静态资源
         filterChainDefinitionMap.put("/js/**", "anon"); //匿名访问静态资源
@@ -95,6 +93,16 @@ public class ShiroConfig {
 
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
         return shiroFilterFactoryBean;
+    }
+
+    @Bean
+    public FilterRegistrationBean delegatingFilterProxy(){
+        FilterRegistrationBean filterRegistrationBean = new FilterRegistrationBean();
+        DelegatingFilterProxy proxy = new DelegatingFilterProxy();
+        proxy.setTargetFilterLifecycle(true);
+        proxy.setTargetBeanName("shiroFilter");
+        filterRegistrationBean.setFilter(proxy);
+        return filterRegistrationBean;
     }
 
 
