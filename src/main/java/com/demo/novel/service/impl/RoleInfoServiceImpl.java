@@ -2,7 +2,6 @@ package com.demo.novel.service.impl;
 
 import com.demo.novel.dao.RoleInfoMapper;
 import com.demo.novel.entity.RoleInfo;
-import com.demo.novel.entity.UserInfo;
 import com.demo.novel.service.RoleInfoService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;

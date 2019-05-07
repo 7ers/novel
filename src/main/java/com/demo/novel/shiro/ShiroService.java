@@ -20,8 +20,7 @@ public class ShiroService {
     private ShiroFilterFactoryBean shiroFilterFactoryBean;
     @Autowired
     private PermsInfoService permsInfoService;
-  /*  @Autowired
-    private RedisSessionDAO redisSessionDAO;*/
+
     /**
      * 初始化权限
      */
@@ -29,10 +28,12 @@ public class ShiroService {
         // 权限控制map.从数据库获取
         Map<String, String> filterChainDefinitionMap = new LinkedHashMap<String, String>();
         filterChainDefinitionMap.put("/logout", "logout");
-        filterChainDefinitionMap.put("/css/**","anon");
-        filterChainDefinitionMap.put("/js/**","anon");
-        filterChainDefinitionMap.put("/img/**","anon");
-        filterChainDefinitionMap.put("/font-awesome/**","anon");
+        filterChainDefinitionMap.put("/adminlte/**", "anon"); //匿名访问静态资源
+        filterChainDefinitionMap.put("/css/**", "anon"); //匿名访问静态资源
+        filterChainDefinitionMap.put("/js/**", "anon"); //匿名访问静态资源
+        filterChainDefinitionMap.put("/images/**", "anon"); //匿名访问静态资源
+        filterChainDefinitionMap.put("/img/**", "anon"); //匿名访问静态资源
+        filterChainDefinitionMap.put("/layout/**", "anon"); //匿名访问静态资源
         List<PermsInfo> resourcesList = permsInfoService.queryAll();
         for(PermsInfo permsInfo:resourcesList){
             String permsval = permsInfo.getPermsval();

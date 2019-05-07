@@ -3,7 +3,6 @@ package com.demo.novel.service.impl;
 import com.demo.novel.dao.RolePermsMapper;
 import com.demo.novel.dao.UserRoleMapper;
 import com.demo.novel.entity.RolePerms;
-import com.demo.novel.entity.UserRole;
 import com.demo.novel.service.RolePermsService;
 import com.demo.novel.shiro.NovelRealm;
 import org.springframework.beans.factory.annotation.Autowired;
