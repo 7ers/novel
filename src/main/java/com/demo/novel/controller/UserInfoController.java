@@ -94,7 +94,6 @@ public class UserInfoController {
             userRoleService.addUserRole(userRole);
             return "success";
         } catch (Exception e) {
-            e.printStackTrace();
             return "fail";
         }
     }

@@ -22,4 +22,11 @@ public class Constants {
     public static final String RET_CODE_E0004 = "E0004";
     public static final String RET_DESC_E0004 = "登录失败！";
 
+    public static final String RET_CODE_E0005 = "E0005";
+    public static final String RET_DESC_E0005 = "该用户已存在！";
+
+    public static final String RET_CODE_E0006 = "E0006";
+    public static final String RET_DESC_E0006 = "注册失败！";
+
+    public static final String DIC_TYPE_CATEGORY = "category";
 }

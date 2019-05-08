@@ -1,7 +1,9 @@
 package com.demo.novel.service.impl;
 
 import com.demo.novel.dao.NovelBaseMapper;
+import com.demo.novel.dao.NovelChapterMapper;
 import com.demo.novel.entity.NovelBase;
+import com.demo.novel.entity.NovelChapter;
 import com.demo.novel.service.NovelManualService;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
@@ -17,6 +19,9 @@ public class NovelManualServiceImpl implements NovelManualService {
 
     @Autowired
     private NovelBaseMapper novelBaseMapper;
+
+    @Autowired
+    private NovelChapterMapper novelChapterMapper;
 
     /**
      * 查询小说列表
@@ -47,7 +52,17 @@ public class NovelManualServiceImpl implements NovelManualService {
     }
 
     @Override
+    public  List<NovelBase> selectListByEntity(NovelBase novelBase) {
+        return novelBaseMapper.selectByEntity(novelBase);
+    }
+
+    @Override
     public int deleteByPrimaryKey(Integer id) {
         return novelBaseMapper.deleteByPrimaryKey(id);
+    }
+
+    @Override
+    public List<NovelChapter> selectChapterList(Integer sectionid) {
+        return novelChapterMapper.selectChapterList(sectionid);
     }
 }

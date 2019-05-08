@@ -1,5 +1,6 @@
 package com.demo.novel.controller;
 
+import com.demo.novel.controller.app.APPController;
 import com.demo.novel.util.Constants;
 import com.demo.novel.util.JsonResult;
 import org.junit.Assert;

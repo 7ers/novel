@@ -34,6 +34,8 @@ public class ShiroService {
         filterChainDefinitionMap.put("/images/**", "anon"); //匿名访问静态资源
         filterChainDefinitionMap.put("/img/**", "anon"); //匿名访问静态资源
         filterChainDefinitionMap.put("/layout/**", "anon"); //匿名访问静态资源
+        filterChainDefinitionMap.put("/app/**","anon");//app端数据交互匿名访问
+
         List<PermsInfo> resourcesList = permsInfoService.queryAll();
         for(PermsInfo permsInfo:resourcesList){
             String permsval = permsInfo.getPermsval();

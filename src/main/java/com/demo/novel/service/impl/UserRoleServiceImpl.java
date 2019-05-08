@@ -41,4 +41,20 @@ public class UserRoleServiceImpl implements UserRoleService {
         userid.add(userRole.getUserid());
         myShiroRealm.clearUserAuthByUserId(userid);
     }
+
+    @Override
+    @Transactional(propagation= Propagation.REQUIRED,readOnly=false,rollbackFor={Exception.class})
+    public void addAPPUserRole(Integer userid) {
+        //删除
+        userRoleMapper.deleteByUserId(userid);
+        //添加
+        UserRole u = new UserRole();
+        u.setUserid(userid);
+        u.setRoleid("2");
+        userRoleMapper.insert(u);
+        //更新当前登录的用户的权限缓存
+        List<Integer> userArr = new ArrayList<Integer>();
+        userArr.add(userid);
+        myShiroRealm.clearUserAuthByUserId(userArr);
+    }
 }

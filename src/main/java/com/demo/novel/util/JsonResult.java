@@ -5,6 +5,14 @@ public class JsonResult {
     private String msg;
     private String code;
 
+    public JsonResult() {
+    }
+
+    public JsonResult(String code, String msg) {
+        this.msg = msg;
+        this.code = code;
+    }
+
     public Object getObj() {
         return obj;
     }
