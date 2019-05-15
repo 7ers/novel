@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.demo.novel.dao.UserBalanceMapper">
+  <resultMap id="BaseResultMap" type="com.demo.novel.entity.UserBalance">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="money" jdbcType="DECIMAL" property="money" />
+    <result column="version" jdbcType="INTEGER" property="version" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, username, money, version
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_user_balance
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectByUserName" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_user_balance
+    where username = #{username,jdbcType=BIGINT}
+  </select>
+  <insert id="addUserBalance" useGeneratedKeys="true" keyProperty="id" parameterType="com.demo.novel.entity.UserBalance">
+    insert into t_user_balance (id, username, money, 
+      version)
+    values (#{id,jdbcType=BIGINT}, #{username,jdbcType=VARCHAR}, #{money,jdbcType=DECIMAL}, 
+      #{version,jdbcType=INTEGER})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.demo.novel.entity.UserBalance">
+    <![CDATA[
+      	update t_user_balance
+      	set money = #{money,jdbcType=DECIMAL}, version = version + 1 where id =#{id,jdbcType=INTEGER} and version = #{version,jdbcType=INTEGER}
+    ]]>
+  </update>
+</mapper>

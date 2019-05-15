@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.demo.novel.dao.UserSessionMapper">
+  <resultMap id="BaseResultMap" type="com.demo.novel.entity.UserSession">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="sessionval" jdbcType="VARCHAR" property="sessionval" />
+    <result column="cookieid" jdbcType="VARCHAR" property="cookieid" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="createtime" jdbcType="TIMESTAMP" property="createtime" />
+    <result column="updatetime" jdbcType="TIMESTAMP" property="updatetime" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, sessionval, cookieid, user_id, createtime, updatetime, status
+  </sql>
+  <select id="queryByEntity" parameterType="com.demo.novel.entity.UserSession" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_user_session
+    WHERE cookieid = #{cookieid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByEntity" parameterType="java.lang.Integer">
+    delete from t_user_session
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insertByEntity" useGeneratedKeys="true" keyProperty="id" parameterType="com.demo.novel.entity.UserSession">
+    insert into t_user_session (id, sessionval, cookieid, 
+      user_id, createtime, updatetime, 
+      status)
+    values (#{id,jdbcType=INTEGER}, #{sessionval,jdbcType=VARCHAR}, #{cookieid,jdbcType=VARCHAR}, 
+      #{userId,jdbcType=INTEGER}, now(), now(),
+      #{status,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByEntity" parameterType="com.demo.novel.entity.UserSession">
+    update t_user_session
+    set sessionval = #{sessionval,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=INTEGER},
+      cookieid = #{cookieid,jdbcType=VARCHAR},
+      updatetime = now(),
+      status = #{status,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
