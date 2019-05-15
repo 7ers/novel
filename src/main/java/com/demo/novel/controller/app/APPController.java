@@ -1,8 +1,10 @@
 package com.demo.novel.controller.app;
 
+import com.demo.novel.entity.LoginLog;
 import com.demo.novel.entity.UserInfo;
 import com.demo.novel.entity.UserRole;
 import com.demo.novel.entity.UserSession;
+import com.demo.novel.service.LoginLogService;
 import com.demo.novel.service.UserInfoService;
 import com.demo.novel.service.UserRoleService;
 import com.demo.novel.service.UserSessionService;
@@ -21,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -33,6 +36,8 @@ public class APPController {
     UserInfoService userInfoService;
     @Resource
     UserRoleService userRoleService;
+    @Resource
+    LoginLogService loginLogService;
     /**
      * appd端登录接口
      * @param username
@@ -49,6 +54,9 @@ public class APPController {
         }
         Subject subject = SecurityUtils.getSubject();
         UsernamePasswordToken token=new UsernamePasswordToken(username,password);
+        LoginLog loginLog = new LoginLog();
+        loginLog.setCreatetime(Calendar.getInstance().getTime());
+        loginLog.setUsername(username);
         try {
             subject.login(token);
             UserInfo userInfo = userInfoService.findByUsername(username);
@@ -61,22 +69,24 @@ public class APPController {
                 jr.setCode(Constants.RET_CODE_00000);
                 jr.setMsg(Constants.RET_DESC_00000);
                 jr.setObj(hm);
+
             }else{
                 jr.setCode(Constants.RET_CODE_E0004);
                 jr.setMsg(Constants.RET_DESC_E0004);
             }
-            return jr;
+            loginLog.setLastupdatetime(Calendar.getInstance().getTime());
         }catch (LockedAccountException lae) {
             token.clear();
             jr.setCode(Constants.RET_CODE_E0002);
             jr.setMsg(Constants.RET_DESC_E0002);
-            return jr;
         } catch (AuthenticationException e) {
             token.clear();
             jr.setCode(Constants.RET_CODE_E0003);
             jr.setMsg(Constants.RET_DESC_E0003);
-            return jr;
         }
+        loginLog.setMsg(jr.getCode());
+        loginLogService.writeLog(loginLog);
+        return jr;
     }
 
     /**

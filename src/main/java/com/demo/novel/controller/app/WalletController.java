@@ -43,7 +43,7 @@ public class WalletController {
                     return new JsonResult(Constants.RET_CODE_ERROR,"类型错误");
                 }
                 inUserBalance.setId(ub.getId());
-                userBalanceService.updateUserBalance(inUserBalance);
+                userBalanceService.updateUserBalance(inUserBalance,type);
             }
             return new JsonResult(Constants.RET_CODE_00000,Constants.RET_DESC_00000);
         }catch (Exception e){

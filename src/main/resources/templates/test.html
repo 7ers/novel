@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>登 录</title>
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <!-- Bootstrap 3.3.7 -->
+  <link rel="stylesheet" href="/adminlte/bower_components/bootstrap/dist/css/bootstrap.min.css">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="/adminlte/bower_components/font-awesome/css/font-awesome.min.css">
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="/adminlte/bower_components/Ionicons/css/ionicons.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="/adminlte/dist/css/AdminLTE.min.css">
+  <!-- iCheck -->
+  <link rel="stylesheet" href="/adminlte/plugins/iCheck/square/blue.css">
+
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+  <script src="/adminlte/js/html5shiv.min.js"></script>
+  <script src="/adminlte/js/respond.min.js"></script>
+  <![endif]-->
+
+</head>
+<body class="hold-transition login-page">
+<div class="login-box">
+  <div class="login-logo">
+    <a href="/starter.html"><b>用 户 登 录</b></a>
+  </div>
+  <!-- /.login-logo -->
+  <div class="login-box-body">
+    <p class="login-box-msg">登 录</p>
+
+    <form action="/appLogin" method="post" id="loginForm">
+      <div class="form-group has-feedback">
+        <input type="text" name="username" id="id-username" value="admin" class="form-control" placeholder="用户名">
+        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+      </div>
+      <div class="form-group has-feedback">
+        <input type="password" name="password" id="id-pwd" value="123456" class="form-control" placeholder="密码">
+        <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+      </div>
+      <div class="row">
+        <div class="col-xs-8">
+          <div class="checkbox icheck">
+            <label>
+              <input type="checkbox"> 记住用户名
+            </label>
+          </div>
+        </div>
+        <!-- /.col -->
+        <div class="col-xs-4">
+          <button onclick="login()" class="btn btn-primary btn-block btn-flat">登 录</button>
+        </div>
+        <!-- /.col -->
+      </div>
+      <div class="row">
+        <div class="col-xs-12 text-center"><span class="alert-danger" th:text="${msg}"></span></div>
+      </div>
+    </form>
+    <br>
+    <div class="row">
+      <div class="col-xs-6 text-left"><a href="#">我忘记了密码</a><br></div>
+      <div class="col-xs-6 text-right"><a href="register.html">注册新会员</a></div>
+    </div>
+  </div>
+  <!-- /.login-box-body -->
+</div>
+<!-- /.login-box -->
+
+<!-- jQuery 3 -->
+<script src="/adminlte/bower_components/jquery/dist/jquery.min.js"></script>
+<!-- Bootstrap 3.3.7 -->
+<script src="/adminlte/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<!-- iCheck -->
+<script src="/adminlte/plugins/iCheck/icheck.min.js"></script>
+<script>
+  $(function () {
+    $('input').iCheck({
+      checkboxClass: 'icheckbox_square-blue',
+      radioClass: 'iradio_square-blue',
+      increaseArea: '20%' /* optional */
+    });
+  });
+
+  function login() {
+    $.ajax({
+      cache: true,
+      type: "POST",
+      url:'/appLogin',
+      data:$('#loginForm').serialize(),// 你的formid
+      async: false,
+      dataType:'json',
+      success: function(data) {
+        if(data=="success"){
+          layer.msg('保存成功');
+          $('#selectRole').modal('hide');
+        }else{
+          layer.msg('保存失败');
+          $('#selectRole').modal('hide');
+        }
+      }
+    });
+  }
+</script>
+</body>
+</html>

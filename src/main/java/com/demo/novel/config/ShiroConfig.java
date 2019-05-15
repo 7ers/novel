@@ -87,7 +87,6 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/css/**", "anon"); //匿名访问静态资源
         filterChainDefinitionMap.put("/js/**", "anon"); //匿名访问静态资源
         filterChainDefinitionMap.put("/images/**", "anon"); //匿名访问静态资源
-        filterChainDefinitionMap.put("/img/**", "anon"); //匿名访问静态资源
         filterChainDefinitionMap.put("/layout/**", "anon"); //匿名访问静态资源
         filterChainDefinitionMap.put("/app/**","anon");//app端数据交互匿名访问
 

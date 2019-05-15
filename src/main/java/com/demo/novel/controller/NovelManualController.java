@@ -1,7 +1,9 @@
 package com.demo.novel.controller;
 
+import com.demo.novel.entity.Dic;
 import com.demo.novel.entity.Novel;
 import com.demo.novel.entity.NovelBase;
+import com.demo.novel.service.CommonDicService;
 import com.demo.novel.service.NovelManualService;
 import com.demo.novel.util.C;
 import com.demo.novel.util.Constants;
@@ -10,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,6 +24,9 @@ public class NovelManualController {
     @Autowired
     NovelManualService novelManualService;
 
+    @Resource
+    CommonDicService commonDicService;
+
     @RequestMapping("/queryNovelList")
     public Map<String, Object> getAll(
             @RequestParam(required = false, defaultValue = "1") String draw,
@@ -27,6 +34,7 @@ public class NovelManualController {
             @RequestParam(required = false, defaultValue = "10") int length) {
         Map<String, Object> map = new HashMap<>();
         List<NovelBase> novelList = novelManualService.getAll();
+
         map.put("draw", draw);
         map.put("recordsTotal", novelList.size());
         map.put("recordsFiltered", novelList.size());
@@ -43,15 +51,19 @@ public class NovelManualController {
             @RequestParam(required = false) String status) {
         System.out.println("querybykeyword");
         Map<String, Object> map = new HashMap<>();
-        List<NovelBase> novelList;
-//        if(StringUtils.isEmpty(bookname)&&StringUtils.isEmpty(status)){
-//            novelList = novelManualService.getAll();
-//        }else{
-            NovelBase novelBase = new NovelBase();
-            novelBase.setBookname(bookname);
-            novelBase.setStatus(status);
+        NovelBase novelBase = new NovelBase();
+        novelBase.setBookname(bookname);
+        novelBase.setStatus(status);
         PageInfo<NovelBase> pageInfo = novelManualService.selectByEntity(novelBase,start,length);
-//        }
+        List<Dic> dicList = commonDicService.queryDicList("category");
+        Map<String, String> hm = new HashMap<>();
+        for (Dic dic:dicList) {
+            hm.put(dic.getValue(),dic.getDesc());
+        }
+
+        for(NovelBase nb: pageInfo.getList()){
+            nb.setCategory(hm.get(nb.getCategory()));
+        }
         map.put("draw", draw);
         map.put("recordsTotal", pageInfo.getTotal());
         map.put("recordsFiltered", pageInfo.getTotal());

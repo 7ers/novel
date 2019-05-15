@@ -8,8 +8,10 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.session.mgt.ValidatingSession;
 import org.apache.shiro.session.mgt.eis.EnterpriseCacheSessionDAO;
+import org.apache.shiro.subject.Subject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
@@ -18,6 +20,8 @@ import java.io.Serializable;
 @Component
 @Repository
 public class DBShiroSessionDAO extends EnterpriseCacheSessionDAO {
+
+    private static final Logger logger = LoggerFactory.getLogger(DBShiroSessionDAO.class);
 
     @Autowired
     private UserSessionService userSessionService;
@@ -64,8 +68,10 @@ public class DBShiroSessionDAO extends EnterpriseCacheSessionDAO {
         UserSession retUserSession = userSessionService.queryByEntity(inUserSession);
         retUserSession.setSessionval(SerializableUtils.serializ(session));
         // 如果登录成功，更新用户id
-        if (SecurityUtils.getSubject().isAuthenticated()){
-            UserInfo userInfo = (UserInfo) SecurityUtils.getSubject().getPrincipal();
+        Subject subject = SecurityUtils.getSubject();
+        if (subject.isAuthenticated()){
+            logger.info(subject.getPrincipal().toString());
+            UserInfo userInfo = (UserInfo) subject.getPrincipal();
             retUserSession.setUserId(userInfo.getUserid());
         }
 

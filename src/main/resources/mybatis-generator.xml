@@ -46,8 +46,8 @@
             <property name="enableSubPackages" value="false"/>
         </javaClientGenerator>
         <!-- 指定数据库表  多个表示,可用多个table标签-->
-        <table tableName="t_user_session"
-               domainObjectName="UserSession"
+        <table tableName="t_log_login"
+               domainObjectName="LoginLog"
                enableCountByExample="false"
                enableUpdateByExample="false"
                enableDeleteByExample="false"
