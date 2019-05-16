@@ -12,10 +12,13 @@ import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.cache.CacheManager;
 import org.apache.shiro.cache.ehcache.EhCacheManager;
 import org.apache.shiro.mgt.SecurityManager;
+import org.apache.shiro.session.mgt.SessionManager;
+import org.apache.shiro.session.mgt.eis.JavaUuidSessionIdGenerator;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.CookieRememberMeManager;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
+import org.apache.shiro.web.servlet.Cookie;
 import org.apache.shiro.web.servlet.SimpleCookie;
 import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -133,17 +136,33 @@ public class ShiroConfig {
     /**
      * shiro session的管理
      */
-    @Bean
-    public DefaultWebSessionManager sessionManager() {
+    @Bean("sessionManager")
+    public SessionManager sessionManager() {
         DefaultWebSessionManager sessionManager = new DefaultWebSessionManager();
+        //设置session过期时间为1小时(单位：毫秒)，默认为30分钟
+        sessionManager.setGlobalSessionTimeout(60 * 60 * 1000);
+        sessionManager.setDeleteInvalidSessions(true);
+        sessionManager.setSessionValidationSchedulerEnabled(true);
+        sessionManager.setSessionIdUrlRewritingEnabled(false);
         sessionManager.setSessionDAO(dbSessionDAO());
+        sessionManager.setSessionIdCookieEnabled(true);
+        sessionManager.setSessionIdCookie(sessionIdCookie());
         return sessionManager;
+    }
+
+    @Bean
+    public Cookie sessionIdCookie(){
+        SimpleCookie simpleCookie = new SimpleCookie("sid");
+        simpleCookie.setHttpOnly(true);
+        simpleCookie.setMaxAge(-1);
+        return simpleCookie;
     }
 
     @Bean
     public DBShiroSessionDAO dbSessionDAO(){
         DBShiroSessionDAO dbShiroSessionDAO = new DBShiroSessionDAO();
         dbShiroSessionDAO.setCacheManager(ehCacheManager());
+        dbShiroSessionDAO.setActiveSessionsCacheName("shiro-activeSessionCache");
         return dbShiroSessionDAO;
     }
 
