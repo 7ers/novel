@@ -32,6 +32,22 @@ public class NovelManualServiceImpl implements NovelManualService {
         return novelBaseMapper.selectAll();
     }
 
+    /**
+     * 查询小说列表
+     * @param category
+     * @param start
+     * @param length
+     * @return
+     */
+    @Override
+    public PageInfo<NovelBase> getNovelListByCategory(String category, int start, int length){
+        int page = start/length+1;
+        //分页查询
+        PageHelper.startPage(page, length);
+        List<NovelBase> novelList = novelBaseMapper.selectByCategory(category);
+        return new PageInfo<>(novelList);
+    }
+
     @Override
     public PageInfo<NovelBase> selectByEntity(NovelBase novelBase, int start, int length) {
         int page = start/length+1;

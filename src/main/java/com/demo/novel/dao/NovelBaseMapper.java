@@ -26,4 +26,6 @@ public interface NovelBaseMapper {
     List<NovelBase> selectByEntity(NovelBase record);
 
     NovelBase selectByBookName(String bookname);
+
+    List<NovelBase> selectByCategory(String category);
 }

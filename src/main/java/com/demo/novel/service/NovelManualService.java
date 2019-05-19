@@ -14,4 +14,5 @@ public interface NovelManualService {
     int deleteByPrimaryKey(Integer id);
     List<NovelBase> selectListByEntity(NovelBase novelBase);
     List<NovelChapter> selectChapterList(Integer sectionid);
+    PageInfo<NovelBase> getNovelListByCategory(String category, int start, int length);
 }

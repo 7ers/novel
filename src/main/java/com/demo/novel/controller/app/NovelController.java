@@ -8,6 +8,7 @@ import com.demo.novel.service.NovelManualService;
 import com.demo.novel.shiro.GlobalExceptionResolver;
 import com.demo.novel.util.Constants;
 import com.demo.novel.util.JsonResult;
+import com.github.pagehelper.PageInfo;
 import org.mybatis.logging.Logger;
 import org.mybatis.logging.LoggerFactory;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -43,7 +44,26 @@ public class NovelController {
     }
 
     /**
-     * 查询小说列表
+     * 通过类型查询小说列表
+     * @param category -类别
+     * @param start -开始页
+     * @param length -单页条数
+     * @return Json对象{"code":"","msg":"","obj":""}
+     */
+    @GetMapping("/novellistByCategory")
+    public JsonResult novelListByCategory(String category,int start,int length){
+        PageInfo<NovelBase> novelList = appNovelManualService.getNovelListByCategory(category, start, length);
+        JsonResult jr = new JsonResult(Constants.RET_CODE_00000,Constants.RET_DESC_00000);
+        Map<String, Object> map = new HashMap<>();
+        map.put("recordsTotal", novelList.getTotal());//总条数
+        map.put("recordsFiltered", novelList.getTotal());
+        map.put("data", novelList.getList());//数据
+        jr.setObj(map);
+        return jr;
+    }
+
+    /**
+     * 查询小说类别
      * @return Json对象{"code":"","msg":"","obj":""}
      */
     @GetMapping("/novelcategory")
