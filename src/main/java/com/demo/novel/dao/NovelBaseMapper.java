@@ -11,13 +11,7 @@ public interface NovelBaseMapper {
 
     int insert(NovelBase record);
 
-    int insertSelective(NovelBase record);
-
     NovelBase selectByPrimaryKey(Integer id);
-
-    int updateByPrimaryKeySelective(NovelBase record);
-
-    int updateByPrimaryKeyWithBLOBs(NovelBase record);
 
     int updateByPrimaryKey(NovelBase record);
 

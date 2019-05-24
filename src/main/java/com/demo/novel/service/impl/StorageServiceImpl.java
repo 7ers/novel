@@ -47,7 +47,7 @@ public class StorageServiceImpl implements StorageService {
     }
 
     @Override
-    public String store(MultipartFile multipartFile, int id) {
+    public String store(MultipartFile multipartFile, String id) {
         String filename = StringUtils.cleanPath(multipartFile.getOriginalFilename());
         try {
             if (multipartFile.isEmpty()) {

@@ -32,7 +32,7 @@ public class FileUploadController {
     @RequestMapping(value="/uploadfile",method = RequestMethod.POST)
     public String handleFileUpload(
             @RequestParam("file") MultipartFile file,
-            @RequestParam(required=true) int id) {
+            @RequestParam(required=true) String id) {
         return storageService.store(file,id);
     }
 }

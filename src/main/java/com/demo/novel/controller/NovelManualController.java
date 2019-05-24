@@ -1,19 +1,19 @@
 package com.demo.novel.controller;
 
 import com.demo.novel.entity.Dic;
-import com.demo.novel.entity.Novel;
 import com.demo.novel.entity.NovelBase;
 import com.demo.novel.service.CommonDicService;
 import com.demo.novel.service.NovelManualService;
-import com.demo.novel.util.C;
 import com.demo.novel.util.Constants;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

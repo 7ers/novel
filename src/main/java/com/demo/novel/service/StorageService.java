@@ -10,7 +10,7 @@ import java.util.stream.Stream;
 
 public interface StorageService {
     void init();
-    String store(MultipartFile multipartFile,int id);
+    String store(MultipartFile multipartFile,String id);
     Stream<Path> loadAll();
     void deleteAll();
     List<NovelChapter> splitFile(String filename);

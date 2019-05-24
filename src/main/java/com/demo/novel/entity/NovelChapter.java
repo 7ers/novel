@@ -3,11 +3,31 @@ package com.demo.novel.entity;
 public class NovelChapter {
     private Integer id;
 
-    private Integer sectionid;
+    private String sectionid;
 
     private String chaptername;
 
     private String content;
+
+    private String paymoney;
+
+    private String chapterid;
+
+    public String getPaymoney() {
+        return paymoney;
+    }
+
+    public void setPaymoney(String paymoney) {
+        this.paymoney = paymoney;
+    }
+
+    public String getChapterid() {
+        return chapterid;
+    }
+
+    public void setChapterid(String chapterid) {
+        this.chapterid = chapterid;
+    }
 
     public Integer getId() {
         return id;
@@ -17,11 +37,11 @@ public class NovelChapter {
         this.id = id;
     }
 
-    public Integer getSectionid() {
+    public String getSectionid() {
         return sectionid;
     }
 
-    public void setSectionid(Integer sectionid) {
+    public void setSectionid(String sectionid) {
         this.sectionid = sectionid;
     }
 

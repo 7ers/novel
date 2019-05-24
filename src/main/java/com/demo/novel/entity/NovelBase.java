@@ -17,6 +17,46 @@ public class NovelBase {
 
     private String abstracts;
 
+    private String novelid;
+
+    private String cover;
+
+    private String counts;
+
+    private String readtimes;
+
+    public String getNovelid() {
+        return novelid;
+    }
+
+    public void setNovelid(String novelid) {
+        this.novelid = novelid;
+    }
+
+    public String getCover() {
+        return cover;
+    }
+
+    public void setCover(String cover) {
+        this.cover = cover;
+    }
+
+    public String getCounts() {
+        return counts;
+    }
+
+    public void setCounts(String counts) {
+        this.counts = counts;
+    }
+
+    public String getReadtimes() {
+        return readtimes;
+    }
+
+    public void setReadtimes(String readtimes) {
+        this.readtimes = readtimes;
+    }
+
     public Integer getId() {
         return id;
     }
