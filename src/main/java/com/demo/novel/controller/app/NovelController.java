@@ -45,10 +45,13 @@ public class NovelController {
 
     /**
      * 通过类型查询小说列表
-     * @param category -类别
+     * @param category -类别 0-通用，1-男频，2-女频，n-推荐
      * @param start -开始页
      * @param length -单页条数
-     * @return Json对象{"code":"","msg":"","obj":""}
+     * @return Json对象{"code":"","msg":"","obj":"
+     * list:novel_id-小说id;bookname-小说名称;category-类别;cover-封面
+     * "}
+     * 2019-05-25
      */
     @GetMapping("/novellistByCategory")
     public JsonResult novelListByCategory(String category,int start,int length){
@@ -63,6 +66,49 @@ public class NovelController {
     }
 
     /**
+     * 查询小说详情及章节列表
+     * @Param novel_id  小说id
+     * @return Json对象{"code":"","msg":"","obj":"
+     * novelDetail:小说基本信息对象{id-无意义, bookname-小说名, author-小说作者, category-类别, status-状态, updatetime-更新时间, novel_id-小说id, cover-封面, counts-字数, readtimes-阅读次数, abstract-摘要}
+     * novelChapterList:章节列表{id-无意义, sectionid-小说id, chapterid-章节id, chaptername-章节名称, paymoney-收费价格}
+     * "}
+     * 2019-05-25
+     */
+    @GetMapping("/novelDetail")
+    public JsonResult novelDetail(String novel_id){
+        NovelBase novelDetail = appNovelManualService.selectByNovelId(novel_id);
+        JsonResult jr = new JsonResult(Constants.RET_CODE_00000,Constants.RET_DESC_00000);
+        Map<String, Object> map = new HashMap<>();
+        map.put("novelDetail",novelDetail);
+        List<NovelChapter> novelChapterList = appNovelManualService.qryChapterListByNovelId(novel_id);
+        map.put("novelChapterList",novelChapterList);
+        jr.setObj(novelDetail);
+        return jr;
+    }
+
+    /**
+     * 通过查询小说章节列表详情
+     * @param novel_id
+     * @param start -开始章节
+     * @param length -单页条数
+     * @return Json对象{"code":"","msg":"","obj":"
+     * data:sectionid-小说id;chapterid-章节id;chaptername-章节名称;paymoney-收费价格;content-章节内容
+     * "}
+     * 2019-05-25
+     */
+    @GetMapping("/chapterListDetail")
+    public JsonResult chapterListDetail(String novel_id,int start,int length){
+        PageInfo<NovelChapter> chapterList = appNovelManualService.chapterListDetailByNovelId(novel_id, start, length);
+        JsonResult jr = new JsonResult(Constants.RET_CODE_00000,Constants.RET_DESC_00000);
+        Map<String, Object> map = new HashMap<>();
+        map.put("recordsTotal", chapterList.getTotal());//总条数
+        map.put("recordsFiltered", chapterList.getTotal());
+        map.put("data", chapterList.getList());//数据
+        jr.setObj(map);
+        return jr;
+    }
+
+    /**
      * 查询小说类别
      * @return Json对象{"code":"","msg":"","obj":""}
      */
@@ -71,19 +117,6 @@ public class NovelController {
         List<Dic> categoryList = commonDicService.queryDicList(Constants.DIC_TYPE_CATEGORY);
         JsonResult jr = new JsonResult(Constants.RET_CODE_00000,Constants.RET_DESC_00000);
         jr.setObj(categoryList);
-        return jr;
-    }
-
-    /**
-     * 查询id为**小说的章节列表
-     * @param id-小说id
-     * @return 章节列表，Json对象{"code":"","msg":"","obj":""}
-     */
-    @GetMapping("/chapterlist")
-    public JsonResult chapterlist(Integer id){
-        List<NovelChapter> novelList = appNovelManualService.selectChapterList(id);
-        JsonResult jr = new JsonResult(Constants.RET_CODE_00000,Constants.RET_DESC_00000);
-        jr.setObj(novelList);
         return jr;
     }
 

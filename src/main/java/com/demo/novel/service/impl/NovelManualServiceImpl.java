@@ -11,6 +11,7 @@ import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -44,8 +45,27 @@ public class NovelManualServiceImpl implements NovelManualService {
         int page = start/length+1;
         //分页查询
         PageHelper.startPage(page, length);
-        List<NovelBase> novelList = novelBaseMapper.selectByCategory(category);
+        List<NovelBase> novelList = novelList = novelBaseMapper.selectByCategory(category);
         return new PageInfo<>(novelList);
+    }
+
+    @Override
+    public NovelBase selectByNovelId(String novel_id) {
+        return novelBaseMapper.selectByNovelId(novel_id);
+    }
+
+    @Override
+    public List<NovelChapter> qryChapterListByNovelId(String novel_id) {
+        return novelChapterMapper.qryChapterListByNovelId(novel_id);
+    }
+
+    @Override
+    public PageInfo<NovelChapter> chapterListDetailByNovelId(String novel_id, int start, int length) {
+        int page = start/length+1;
+        //分页查询
+        PageHelper.startPage(page, length);
+        List<NovelChapter> chapterList = novelChapterMapper.selectListDetailByNovelId(novel_id);
+        return new PageInfo<>(chapterList);
     }
 
     @Override
@@ -67,18 +87,10 @@ public class NovelManualServiceImpl implements NovelManualService {
         return novelBaseMapper.selectByBookName(bookname);
     }
 
-    @Override
-    public  List<NovelBase> selectListByEntity(NovelBase novelBase) {
-        return novelBaseMapper.selectByEntity(novelBase);
-    }
 
     @Override
     public int deleteByPrimaryKey(Integer id) {
         return novelBaseMapper.deleteByPrimaryKey(id);
     }
 
-    @Override
-    public List<NovelChapter> selectChapterList(Integer sectionid) {
-        return novelChapterMapper.selectChapterList(sectionid);
-    }
 }

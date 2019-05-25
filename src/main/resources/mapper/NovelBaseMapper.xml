@@ -11,7 +11,7 @@
     <result column="novel_id" jdbcType="VARCHAR" property="novelid" />
     <result column="cover" jdbcType="VARCHAR" property="cover" />
     <result column="counts" jdbcType="VARCHAR" property="counts" />
-    <result column="readtimes" jdbcType="VARCHAR" property="readtimes" />
+    <result column="readtimes" jdbcType="INTEGER" property="readtimes" />
   </resultMap>
   <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.demo.novel.entity.NovelBase">
     <result column="abstract" jdbcType="LONGVARCHAR" property="abstract" />
@@ -38,6 +38,14 @@
     from t_novel_base
     where bookname = #{bookname,jdbcType=VARCHAR}
   </select>
+  <select id="selectByNovelId" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from t_novel_base
+    where novel_id = #{novel_id,jdbcType=VARCHAR}
+  </select>
   <select id="selectAll" resultMap="ResultMapWithBLOBs">
     select
     <include refid="Base_Column_List" />
@@ -56,14 +64,13 @@
       AND status LIKE CONCAT('%',#{status,jdbcType=VARCHAR},'%')
       order by category
   </select>
-  <select id="selectByCategory" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
-    select
-    <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
+  <select id="selectByCategory" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select id, novel_id, bookname, category, cover
     from t_novel_base
-    WHERE category LIKE CONCAT('%',#{category,jdbcType=VARCHAR},'%')
-    order by category
+    <if test="category != 'n'.toString()">
+      WHERE category LIKE CONCAT('%',#{category,jdbcType=VARCHAR},'%')
+    </if>
+    order by readtimes desc
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from t_novel_base

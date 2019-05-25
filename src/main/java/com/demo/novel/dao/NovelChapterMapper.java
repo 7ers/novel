@@ -17,5 +17,7 @@ public interface NovelChapterMapper {
 
     int selectByNovelId(String sectionid);
 
-    List<NovelChapter> selectChapterList(Integer sectionid);
+    List<NovelChapter> qryChapterListByNovelId(String novel_id);
+
+    List<NovelChapter> selectListDetailByNovelId(String novel_id);
 }

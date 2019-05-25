@@ -12,7 +12,10 @@ public interface NovelManualService {
     int insert(NovelBase record);
     NovelBase selectByBookName(String bookname);
     int deleteByPrimaryKey(Integer id);
-    List<NovelBase> selectListByEntity(NovelBase novelBase);
-    List<NovelChapter> selectChapterList(Integer sectionid);
     PageInfo<NovelBase> getNovelListByCategory(String category, int start, int length);
+    NovelBase selectByNovelId(String novel_id);
+
+    List<NovelChapter> qryChapterListByNovelId(String novel_id);
+
+    PageInfo<NovelChapter> chapterListDetailByNovelId(String novel_id, int start, int length);
 }

@@ -23,7 +23,7 @@ public class NovelBase {
 
     private String counts;
 
-    private String readtimes;
+    private int readtimes;
 
     public String getNovelid() {
         return novelid;
@@ -49,11 +49,11 @@ public class NovelBase {
         this.counts = counts;
     }
 
-    public String getReadtimes() {
+    public int getReadtimes() {
         return readtimes;
     }
 
-    public void setReadtimes(String readtimes) {
+    public void setReadtimes(int readtimes) {
         this.readtimes = readtimes;
     }
 

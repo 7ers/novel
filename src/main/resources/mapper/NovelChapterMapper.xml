@@ -30,13 +30,20 @@
     from t_novel_chapter
     where sectionid = #{sectionid,jdbcType=VARCHAR}
   </select>
-  <select id="selectChapterList" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
+  <select id="qryChapterListByNovelId" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select id,sectionid,chapterid,chaptername,paymoney
+    from t_novel_chapter
+    where sectionid = #{sectionid,jdbcType=VARCHAR}
+    order by (chapterid+0) asc
+  </select>
+  <select id="selectListDetailByNovelId" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
     select
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
     from t_novel_chapter
     where sectionid = #{sectionid,jdbcType=VARCHAR}
+    order by (chapterid+0) asc
   </select>
   <select id="selectContentByChapterID" parameterType="com.demo.novel.entity.NovelChapter" resultMap="ResultMapWithBLOBs">
     select
