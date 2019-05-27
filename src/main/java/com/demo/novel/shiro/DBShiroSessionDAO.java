@@ -6,6 +6,7 @@ import com.demo.novel.service.UserSessionService;
 import com.demo.novel.util.SerializableUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
+import org.apache.shiro.session.mgt.SimpleSession;
 import org.apache.shiro.session.mgt.ValidatingSession;
 import org.apache.shiro.session.mgt.eis.EnterpriseCacheSessionDAO;
 import org.apache.shiro.subject.Subject;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import java.io.Serializable;
+import java.util.Date;
 
 @Component
 @Repository
@@ -27,8 +29,8 @@ public class DBShiroSessionDAO extends EnterpriseCacheSessionDAO {
     private UserSessionService userSessionService;
     //创建session
     @Override
-    protected Serializable doCreate(Session session) {
-        Serializable cookie = super.doCreate(session);
+    public Serializable create(Session session) {
+        Serializable cookie = super.create(session);
         // 保存session到数据库
         UserSession userSession = new UserSession();
         userSession.setCookieid(cookie.toString());
@@ -38,12 +40,10 @@ public class DBShiroSessionDAO extends EnterpriseCacheSessionDAO {
     }
 
     @Override
-    protected Session doReadSession(Serializable sessionId) {
-        Session session = super.doReadSession(sessionId);
+    public Session readSession(Serializable sessionId) {
+        Session session = super.readSession(sessionId);
         if (session == null) {
-            UserSession userSession = new UserSession();
-            userSession.setCookieid(sessionId.toString());
-            UserSession retUserSession = userSessionService.queryByEntity(userSession);
+            UserSession retUserSession = getUserSession(sessionId);
             // 如果不为空
             if (retUserSession != null) {
                 String sessionStr64 = retUserSession.getSessionval();
@@ -51,36 +51,51 @@ public class DBShiroSessionDAO extends EnterpriseCacheSessionDAO {
             }
 
         }
+        // 如果是APP则更新lastAccessTime
+        Integer userId = getUserSession(sessionId).getUserId();
+        if(userId != null && !"".equals(userId)){
+            ((SimpleSession)session).setLastAccessTime(new Date());
+        }
         return session;
     }
 
+    private UserSession getUserSession(Serializable sessionId){
+        UserSession userSession = new UserSession();
+        userSession.setCookieid(sessionId.toString());
+        return userSessionService.queryByEntity(userSession);
+    }
+
     @Override
-    protected void doUpdate(Session session) {
-        super.doUpdate(session);
-        //当是ValidatingSession 无效的情况下，直接退出
-        if (session instanceof ValidatingSession &&
-                !((ValidatingSession) session).isValid()) {
-            return;
-        }
+    public void update(Session session) {
+        super.update(session);
+//        //当是ValidatingSession 无效的情况下，直接退出
+//        if (session instanceof ValidatingSession &&
+//                !((ValidatingSession) session).isValid()) {
+//            return;
+//        }
         //检索到用户名
         UserSession inUserSession = new UserSession();
         inUserSession.setCookieid(session.getId().toString());
         UserSession retUserSession = userSessionService.queryByEntity(inUserSession);
-        retUserSession.setSessionval(SerializableUtils.serializ(session));
-        // 如果登录成功，更新用户id
-        Subject subject = SecurityUtils.getSubject();
-        if (subject.isAuthenticated()){
-            logger.info(subject.getPrincipal().toString());
-            UserInfo userInfo = (UserInfo) subject.getPrincipal();
-            retUserSession.setUserId(userInfo.getUserid());
-        }
+        if(retUserSession!=null){
+            // 如果登录成功，更新用户id
+            Subject subject = SecurityUtils.getSubject();
+            if (subject.isAuthenticated()){
+                logger.info(subject.getPrincipal().toString());
+                UserInfo userInfo = (UserInfo) subject.getPrincipal();
+                retUserSession.setUserId(userInfo.getUserid());
+                session.setAttribute("userSession",userInfo);
+                session.setAttribute("userSessionId",userInfo.getUserid());
+            }
+            retUserSession.setSessionval(SerializableUtils.serializ(session));
 
-        userSessionService.updateByEntity(retUserSession);
+            userSessionService.updateByEntity(retUserSession);
+        }
     }
 
     @Override
-    protected void doDelete(Session session) {
-        super.doDelete(session);
+    public void delete(Session session) {
+        super.delete(session);
         UserSession inUserSession = new UserSession();
         inUserSession.setCookieid(session.getId().toString());
         UserSession retUserSession = userSessionService.queryByEntity(inUserSession);

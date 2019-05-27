@@ -80,7 +80,7 @@ public class HomeController {
         return redirect;
     }
 
-    @RequestMapping({"/admin"})
+    @RequestMapping({"/","/admin"})
     public String index(Model model){
         Session session = SecurityUtils.getSubject().getSession();
         System.out.println("HomeController.index");

@@ -72,10 +72,10 @@ public class NovelRealm extends AuthorizingRealm {
             throw new LockedAccountException(); // 帐号锁定
         }
 
-        // 当验证都通过后，把用户信息放在session里
-        Session session = SecurityUtils.getSubject().getSession();
-        session.setAttribute("userSession", userInfo);
-        session.setAttribute("userSessionId", userInfo.getUserid());
+//        // 当验证都通过后，把用户信息放在session里
+//        Session session = SecurityUtils.getSubject().getSession();
+//        session.setAttribute("userSession", userInfo);
+//        session.setAttribute("userSessionId", userInfo.getUserid());
 
         return authenticationInfo;
 
