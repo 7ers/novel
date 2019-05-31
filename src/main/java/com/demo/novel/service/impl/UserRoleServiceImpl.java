@@ -4,23 +4,21 @@ import com.demo.novel.dao.UserRoleMapper;
 import com.demo.novel.entity.UserRole;
 import com.demo.novel.service.UserRoleService;
 import com.demo.novel.shiro.NovelRealm;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by yangqj on 2017/4/26.
- */
+
 @Service("userRoleService")
 public class UserRoleServiceImpl implements UserRoleService {
-    @Autowired
+    @Resource
     private NovelRealm myShiroRealm;
 
-    @Autowired
+    @Resource
     private UserRoleMapper userRoleMapper;
 
     @Override

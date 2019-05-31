@@ -5,15 +5,15 @@ import com.demo.novel.entity.RoleInfo;
 import com.demo.novel.service.RoleInfoService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 @Service
 public class RoleInfoServiceImpl implements RoleInfoService {
 
-    @Autowired
+    @Resource
     private RoleInfoMapper roleInfoMapper;
     @Override
     public List<RoleInfo> queryRoleListWithSelected(int roleid) {

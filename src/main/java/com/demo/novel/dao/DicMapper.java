@@ -1,11 +1,12 @@
 package com.demo.novel.dao;
 
 import com.demo.novel.entity.Dic;
+import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Repository
+@Mapper
 public interface DicMapper {
     int deleteByPrimaryKey(Integer id);
 

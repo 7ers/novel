@@ -12,6 +12,7 @@ import org.springframework.util.FileSystemUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.annotation.Resource;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -28,7 +29,7 @@ public class StorageServiceImpl implements StorageService {
 
     private final Path rootlocation;
 
-    @Autowired
+    @Resource
     private NovelChapterMapper novelChapterMapper;
 
     @Autowired

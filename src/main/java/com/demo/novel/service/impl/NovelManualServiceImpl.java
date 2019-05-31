@@ -5,23 +5,21 @@ import com.demo.novel.dao.NovelChapterMapper;
 import com.demo.novel.entity.NovelBase;
 import com.demo.novel.entity.NovelChapter;
 import com.demo.novel.service.NovelManualService;
-import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
+import javax.annotation.Resource;
 import java.util.List;
 
 
 @Service("NovelManualService")
 public class NovelManualServiceImpl implements NovelManualService {
 
-    @Autowired
+    @Resource
     private NovelBaseMapper novelBaseMapper;
 
-    @Autowired
+    @Resource
     private NovelChapterMapper novelChapterMapper;
 
     /**

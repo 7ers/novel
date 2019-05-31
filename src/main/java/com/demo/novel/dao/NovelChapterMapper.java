@@ -1,11 +1,12 @@
 package com.demo.novel.dao;
 
 import com.demo.novel.entity.NovelChapter;
+import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Repository
+@Mapper
 public interface NovelChapterMapper {
     int deleteByPrimaryKey(Integer id);
 

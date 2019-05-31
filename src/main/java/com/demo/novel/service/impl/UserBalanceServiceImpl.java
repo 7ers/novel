@@ -5,21 +5,20 @@ import com.demo.novel.dao.UserBalanceMapper;
 import com.demo.novel.entity.BalanceLog;
 import com.demo.novel.entity.UserBalance;
 import com.demo.novel.service.UserBalanceService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.Resource;
 import java.util.Calendar;
-import java.util.Date;
 
 @Service
 public class UserBalanceServiceImpl implements UserBalanceService {
 
-    @Autowired
+    @Resource
     UserBalanceMapper userBalanceMapper;
 
-    @Autowired
+    @Resource
     BalanceLogMapper balanceLogMapper;
 
     @Override

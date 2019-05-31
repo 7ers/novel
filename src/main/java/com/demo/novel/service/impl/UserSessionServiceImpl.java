@@ -3,12 +3,13 @@ package com.demo.novel.service.impl;
 import com.demo.novel.dao.UserSessionMapper;
 import com.demo.novel.entity.UserSession;
 import com.demo.novel.service.UserSessionService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
 
 @Service
 public class UserSessionServiceImpl implements UserSessionService {
-    @Autowired
+    @Resource
     UserSessionMapper userSessionMapper;
 
     @Override

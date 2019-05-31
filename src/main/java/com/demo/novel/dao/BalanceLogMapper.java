@@ -1,9 +1,10 @@
 package com.demo.novel.dao;
 
 import com.demo.novel.entity.BalanceLog;
+import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
-@Repository
+@Mapper
 public interface BalanceLogMapper {
     int deleteByPrimaryKey(Long id);
 

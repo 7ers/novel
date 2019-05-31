@@ -11,18 +11,19 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 @Service
 public class RolePermsServiceImpl implements RolePermsService {
-    @Autowired
+    @Resource
     private UserRoleMapper userRoleMapper;
     /*@Resource
     private ShiroService shiroService;*/
-    @Autowired
+    @Resource
     private NovelRealm myShiroRealm;
 
-    @Autowired
+    @Resource
     private RolePermsMapper rolePermsMapper;
 
     @Override

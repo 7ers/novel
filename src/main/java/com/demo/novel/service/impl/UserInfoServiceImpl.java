@@ -1,21 +1,19 @@
 package com.demo.novel.service.impl;
 
 import com.demo.novel.dao.UserInfoMapper;
-import com.demo.novel.entity.NovelBase;
 import com.demo.novel.entity.UserInfo;
 import com.demo.novel.service.UserInfoService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.*;
+import javax.annotation.Resource;
+import java.util.List;
 
 @Service("UserInfoService")
 public class UserInfoServiceImpl implements UserInfoService {
 
-    @Autowired
+    @Resource
     private UserInfoMapper userInfoMapper;
 
     /**
